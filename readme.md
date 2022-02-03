@@ -6,14 +6,52 @@ Python bindings for RocksDB written in Rust.
 
 ### Usage
 
+Basic K-V operations,
+
 ```python
 import rocksdbpy
 
 db = rocksdbpy.open_default('/tmp/rocksdb')
 
-del db
+db.set(b'key', b'value')
 
+value = db.get(b'key')
+
+db.delete(b'key')
+```
+
+Remove database,
+
+```python
 rocksdb.destroy('/tmp/rocksdb')
+```
+
+Write multiple records as batch,
+
+```python
+from rocksdbpy import WriteBatch
+
+batch = WriteBatch()
+batch.add(b'first', b'1')
+batch.add(b'second', b'2')
+
+db.write(batch)
+```
+
+Extra operations in the batch,
+
+```python
+batch.delete(b'first')
+
+batch.clear()
+
+size = batch.len()
+```
+
+Close active database and release lock,
+
+```python
+del db
 ```
 
 ### Build

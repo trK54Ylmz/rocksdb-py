@@ -28,12 +28,11 @@ impl WriteBatchPy {
     /// b.add(b'first', 'first_value')
     /// ```
     fn add(&mut self, key: &PyBytes, value: &PyBytes) -> PyResult<()> {
-        if let Some(inner) = &mut self.writer {
-            Ok(inner.put(key.as_bytes(), value.as_bytes()))
-        } else {
-            Err(RocksDBPyException::new_err(
+        match &mut self.writer {
+            Some(inner) => Ok(inner.put(key.as_bytes(), value.as_bytes())),
+            None => Err(RocksDBPyException::new_err(
                 "Batch writer is invalid. New writer is required",
-            ))
+            )),
         }
     }
 
@@ -47,12 +46,11 @@ impl WriteBatchPy {
     /// b.delete(b'first')
     /// ```
     fn delete(&mut self, key: &PyBytes) -> PyResult<()> {
-        if let Some(inner) = &mut self.writer {
-            Ok(inner.delete(key.as_bytes()))
-        } else {
-            Err(RocksDBPyException::new_err(
+        match &mut self.writer {
+            Some(inner) => Ok(inner.delete(key.as_bytes())),
+            None => Err(RocksDBPyException::new_err(
                 "Batch writer is invalid. New writer is required",
-            ))
+            )),
         }
     }
 
@@ -66,12 +64,11 @@ impl WriteBatchPy {
     /// b.clear()
     /// ```
     fn clear(&mut self) -> PyResult<()> {
-        if let Some(inner) = &mut self.writer {
-            Ok(inner.clear())
-        } else {
-            Err(RocksDBPyException::new_err(
+        match &mut self.writer {
+            Some(inner) => Ok(inner.clear()),
+            None => Err(RocksDBPyException::new_err(
                 "Batch writer is invalid. New writer is required",
-            ))
+            )),
         }
     }
 
@@ -85,24 +82,22 @@ impl WriteBatchPy {
     /// size = b.len()
     /// ```
     fn len(&mut self) -> PyResult<usize> {
-        if let Some(inner) = &mut self.writer {
-            Ok(inner.len())
-        } else {
-            Err(RocksDBPyException::new_err(
+        match &mut self.writer {
+            Some(inner) => Ok(inner.len()),
+            None => Err(RocksDBPyException::new_err(
                 "Batch writer is invalid. New writer is required",
-            ))
+            )),
         }
     }
 }
 
 impl WriteBatchPy {
     pub fn get(&mut self) -> PyResult<WriteBatch> {
-        if let Some(inner) = self.writer.take() {
-            Ok(inner)
-        } else {
-            Err(RocksDBPyException::new_err(
+        match self.writer.take() {
+            Some(inner) => Ok(inner),
+            None => Err(RocksDBPyException::new_err(
                 "Batch writer is invalid. New writer is required",
-            ))
+            )),
         }
     }
 }
