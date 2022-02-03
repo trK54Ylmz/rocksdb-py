@@ -1,0 +1,13 @@
+[package]
+name = "rocksdb-py"
+version = "0.0.1"
+edition = "2021"
+description = "Python bindings for RocksDB"
+
+[lib]
+name = "rocksdbpy"
+crate-type = ["cdylib"]
+
+[dependencies]
+rocksdb = { version = "0.17.0", features = ["snappy", "lz4", "zstd", "zlib", "bzip2"] }
+pyo3 = { version = "0.15.0", features = ["extension-module"] }
