@@ -8,12 +8,14 @@ use pyo3::prelude::*;
 use pyo3::wrap_pyfunction;
 
 #[pymodule]
-fn rocksdbpy(_py: Python, m: &PyModule) -> PyResult<()> {
+fn rocksdbpy(py: Python, m: &PyModule) -> PyResult<()> {
     m.add_class::<RocksDBPy>()?;
 
     m.add_function(wrap_pyfunction!(open, m)?).unwrap();
     m.add_function(wrap_pyfunction!(open_default, m)?).unwrap();
     m.add_function(wrap_pyfunction!(destroy, m)?).unwrap();
+
+    m.add("RocksDBPyException", py.get_type::<RocksDBPyException>())?;
 
     Ok(())
 }

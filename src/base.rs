@@ -27,12 +27,10 @@ pub fn open_default(path: &str) -> PyResult<RocksDBPy> {
 
             return Ok(db);
         }
-        Err(e) => {
-            return Err(RocksDBPyException::new_err(format!(
-                "Database cannot be open, {}",
-                e
-            )))
-        }
+        Err(e) => Err(RocksDBPyException::new_err(format!(
+            "Database cannot be open, {}",
+            e
+        ))),
     }
 }
 
@@ -57,12 +55,10 @@ pub fn open(path: &str, opts: &OptionPy) -> PyResult<RocksDBPy> {
 
             return Ok(db);
         }
-        Err(e) => {
-            return Err(RocksDBPyException::new_err(format!(
-                "Database cannot be open, {}",
-                e
-            )))
-        }
+        Err(e) => Err(RocksDBPyException::new_err(format!(
+            "Database cannot be open, {}",
+            e
+        ))),
     }
 }
 
@@ -83,11 +79,9 @@ pub fn destroy(path: &str, option: Option<OptionPy>) -> PyResult<()> {
 
     match DB::destroy(&opts, path) {
         Ok(()) => Ok(()),
-        Err(e) => {
-            return Err(RocksDBPyException::new_err(format!(
-                "Database cannot be destory, {}",
-                e
-            )))
-        }
+        Err(e) => Err(RocksDBPyException::new_err(format!(
+            "Database cannot be destory, {}",
+            e
+        ))),
     }
 }
