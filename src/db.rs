@@ -1,7 +1,7 @@
 use crate::base::*;
 use crate::batch::*;
 use pyo3::prelude::*;
-use pyo3::types::PyBytes;
+use pyo3::types::{PyBytes, PyList};
 use rocksdb::DB;
 use std::sync::Arc;
 
@@ -88,5 +88,54 @@ impl RocksDBPy {
                 len, e,
             ))),
         }
+    }
+
+    /// Returns entries according to given list of key and values.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// db.multi_get(b'first', b'second')
+    ///
+    /// db.multi_get(b'first', b'second', skip_missings=True)
+    /// ```
+    fn multi_get<'py>(
+        &mut self,
+        py: Python<'py>,
+        keys: &'py PyList,
+        skip_missings: Option<bool>,
+    ) -> PyResult<&'py PyList> {
+        // generate list of keys based on Python's list
+        let ks: Vec<&[u8]> = keys
+            .iter()
+            .map(|k| <PyBytes as PyTryFrom>::try_from(k).unwrap().as_bytes())
+            .collect();
+
+        let result = PyList::empty(py);
+
+        for value in self.db.multi_get(ks) {
+            match value {
+                Ok(v) => match v {
+                    Some(item) => result.append(PyBytes::new(py, item.as_ref())).unwrap(),
+                    None => {
+                        // skip missing records if skip_missings is true, the output array will
+                        // be shorter then given key array size.
+                        if skip_missings.is_none() || skip_missings.unwrap() == false {
+                            result.append(py.None()).unwrap()
+                        } else {
+                            continue;
+                        }
+                    }
+                },
+                Err(e) => {
+                    return Err(RocksDBPyException::new_err(format!(
+                        "Record cannot get. {}",
+                        e,
+                    )))
+                }
+            }
+        }
+
+        Ok(result)
     }
 }

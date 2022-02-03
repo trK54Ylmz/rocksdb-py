@@ -33,6 +33,31 @@ class TestBasic(unittest.TestCase):
 
         self.assertIsNone(empty)
 
+    def test_multi_get(self):
+        db = rocksdbpy.open_default(self.temp)
+
+        keys = [b'test_mget_1', b'test_mget_2']
+        values = [b'test_value_1', b'test_value_2']
+
+        db.set(keys[0], values[0])
+        db.set(keys[1], values[1])
+
+        got = db.multi_get(keys)
+
+        self.assertEqual(got, values)
+
+        keys = [b'test_mget_1', b'test_mget_2', b'key_not_exist']
+
+        got = db.multi_get(keys, skip_missings=True)
+
+        self.assertEqual(got, values)
+
+        values = [b'test_value_1', b'test_value_2', None]
+
+        got = db.multi_get(keys)
+
+        self.assertEqual(got, values)
+
     def remove(self):
         db = rocksdbpy.open_default(self.temp)
 
