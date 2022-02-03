@@ -1,10 +1,16 @@
-### Python bindings for RocksDB
+### rocksdb-py
 
 Python bindings for RocksDB written in Rust.
 
 **Note**: This package under active development.
 
-### Usage
+#### Features
+
+* Get/set/delete
+* Destroy
+* Batch write
+
+#### Usage
 
 Basic K-V operations,
 
@@ -54,7 +60,7 @@ Close active database and release lock,
 del db
 ```
 
-### Build
+#### Build
 
 You can build PIP package by using `maturin`. The example below is created for MacOS,
 

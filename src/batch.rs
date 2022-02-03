@@ -92,6 +92,7 @@ impl WriteBatchPy {
 }
 
 impl WriteBatchPy {
+    #[inline]
     pub fn get(&mut self) -> PyResult<WriteBatch> {
         match self.writer.take() {
             Some(inner) => Ok(inner),
