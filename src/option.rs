@@ -1,7 +1,7 @@
 use pyo3::prelude::*;
 use rocksdb::Options;
 
-#[pyclass(name="Option")]
+#[pyclass(name = "Option")]
 #[derive(Clone)]
 pub struct OptionPy {
     pub inner: Options,
@@ -17,11 +17,11 @@ impl OptionPy {
     }
 
     /// If true, the database will be created if it is missing.
-    /// 
+    ///
     /// Default: `false`
-    /// 
+    ///
     /// # Example
-    /// 
+    ///
     /// ````
     /// opts.create_if_missing(True)
     /// ```
