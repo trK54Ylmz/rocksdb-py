@@ -3,8 +3,10 @@ use crate::option::*;
 use pyo3::create_exception;
 use pyo3::exceptions::PyException;
 use pyo3::prelude::*;
+use pyo3::types::PyInt;
 use rocksdb::{Options, DB};
 use std::sync::Arc;
+use std::time::Duration;
 
 create_exception!(rocksdbpy, RocksDBPyException, PyException);
 
@@ -58,6 +60,39 @@ pub fn open(path: &str, opts: &OptionPy) -> PyResult<RocksDBPy> {
         Err(e) => Err(RocksDBPyException::new_err(format!(
             "Database cannot be open, {}",
             e
+        ))),
+    }
+}
+
+/// Opens the database with TTL compaction filter.
+///
+/// # Example
+///
+/// ```
+/// opts = Option()
+/// opts.create_if_missing(True)
+///
+/// rocksdbpy.open_with_ttl('/tmp/test', opts, 5)
+/// ```
+#[pyfunction]
+pub fn open_with_ttl(path: &str, opts: &OptionPy, ttl: &PyInt) -> PyResult<RocksDBPy> {
+    let secs = ttl.extract::<u64>().unwrap();
+    let duration = Duration::from_secs(secs);
+
+    match DB::open_with_ttl(&opts.inner, path, duration) {
+        Ok(db) => {
+            let db = RocksDBPy {
+                db: Arc::new(db),
+                path: path.as_bytes().to_vec(),
+            };
+
+            return Ok(db);
+        }
+        Err(e) => Err(RocksDBPyException::new_err(format!(
+            "Database cannot be open with {} with ttl {} seconds. {}",
+            path,
+            duration.as_secs(),
+            e,
         ))),
     }
 }
