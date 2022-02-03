@@ -2,7 +2,7 @@
 
 Python bindings for RocksDB written in Rust.
 
-**Note**: This package under active development. Please wait for PIP release.
+**Note**: This package under active development.
 
 ### Usage
 
