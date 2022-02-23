@@ -12,8 +12,8 @@ int main(int argc, char **argv)
     // Get RocksDB connection
     DB *db = get_db();
 
-    auto get_key_f = [](DB* db, int i) { get_key(db, "test_" + to_string(i)); };
-    auto put_key_f = [](DB* db, int i) { put_key(db, "test_" + to_string(i), "value"); };
+    auto get_key_f = [](DB *db, int i){ get_key(db, "test_" + to_string(i)); };
+    auto put_key_f = [](DB *db, int i){ put_key(db, "test_" + to_string(i), "value"); };
 
     auto put_key_diff = timeit(put_key_f, size, db);
     auto get_key_diff = timeit(get_key_f, size, db);

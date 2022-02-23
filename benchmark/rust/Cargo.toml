@@ -1,0 +1,8 @@
+[package]
+name = "rocksdb-rust"
+version = "0.0.1"
+edition = "2021"
+description = "RocksDB benchmarks for Rust"
+
+[dependencies]
+rocksdb = { version = "0.17.0", features = ["snappy", "lz4", "zstd", "zlib", "bzip2"] }

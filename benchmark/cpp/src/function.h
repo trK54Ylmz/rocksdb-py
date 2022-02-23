@@ -13,6 +13,7 @@ using ROCKSDB_NAMESPACE::WriteOptions;
 
 const char *PREFIX = "test_";
 
+// Measure running time of the given function
 template <typename Function>
 int timeit(Function f, int size, DB *db)
 {
