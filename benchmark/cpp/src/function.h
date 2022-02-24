@@ -37,6 +37,7 @@ int timeit(Function f, int size, DB *db)
     return end - start;
 }
 
+// Get value by given key
 string get_key(DB *db, string key)
 {
     string value;
@@ -52,6 +53,7 @@ string get_key(DB *db, string key)
     return value;
 }
 
+// Set entry for given key and value 
 void put_key(DB *db, string key, string value)
 {
     Status status;
