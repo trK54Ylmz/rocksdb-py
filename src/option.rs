@@ -39,7 +39,7 @@ impl OptionPy {
     /// opts.set_max_open_files(10)
     /// ```
     pub fn set_max_open_files(&mut self, number: i32) {
-        self.inner.set_max_open_files(number);
+        self.inner.set_max_open_files(number)
     }
 
     /// If true, then every store to stable storage will issue a fsync.
