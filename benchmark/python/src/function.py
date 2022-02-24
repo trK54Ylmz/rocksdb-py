@@ -12,14 +12,19 @@ def timeit(f, size, db):
 
     end = time.time_ns()
 
-    return (end - start) / 1000
+    return int((end - start) / 1000)
 
 
 def get_key(db, key):
     """
     Get value by given key
     """
-    return db.get(key)
+    value = db.get(key)
+
+    if value is None:
+        return None
+
+    return value
 
 
 def put_key(db, key, value):
