@@ -6,6 +6,11 @@ This folder contains simple benchmark of C++, Python and Rust libraries.
 
 These results ran on Mac Mini M1 2020 (16 GB memory).
 
+<p align="center">
+<img src="./static/get.png" width="500">
+<img src="./static/put.png" width="500">
+</p>
+
 ### C++
 
 Please use `g++` for the benchmarks. Run the following commands to run benchmark,
