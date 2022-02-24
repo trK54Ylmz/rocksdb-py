@@ -22,7 +22,7 @@ impl OptionPy {
     ///
     /// # Example
     ///
-    /// ````
+    /// ```
     /// opts.create_if_missing(True)
     /// ```
     pub fn create_if_missing(&mut self, create_if_missing: bool) {
@@ -35,7 +35,7 @@ impl OptionPy {
     ///
     /// # Example
     ///
-    /// ````
+    /// ```
     /// opts.set_max_open_files(10)
     /// ```
     pub fn set_max_open_files(&mut self, number: i32) {
@@ -49,7 +49,7 @@ impl OptionPy {
     ///
     /// # Example
     ///
-    /// ````
+    /// ```
     /// opts.set_use_fsync(True)
     /// ```
     pub fn set_use_fsync(&mut self, useit: bool) {
@@ -63,7 +63,7 @@ impl OptionPy {
     ///
     /// # Example
     ///
-    /// ````
+    /// ```
     /// opts.set_bytes_per_sync(1024 * 1024)
     /// ```
     pub fn set_bytes_per_sync(&mut self, nbytes: u64) {
@@ -77,7 +77,7 @@ impl OptionPy {
     ///
     /// # Example
     ///
-    /// ````
+    /// ```
     /// opts.optimize_for_point_lookup(1024 * 1024)
     /// ```
     pub fn optimize_for_point_lookup(&mut self, cache_size: u64) {
@@ -90,7 +90,7 @@ impl OptionPy {
     ///
     /// # Example
     ///
-    /// ````
+    /// ```
     /// opts.set_table_cache_num_shard_bits(12)
     /// ```
     pub fn set_table_cache_num_shard_bits(&mut self, size: i32) {
@@ -103,7 +103,7 @@ impl OptionPy {
     ///
     /// # Example
     ///
-    /// ````
+    /// ```
     /// opts.set_max_write_buffer_number(6)
     /// ```
     pub fn set_max_write_buffer_number(&mut self, size: i32) {
@@ -117,7 +117,7 @@ impl OptionPy {
     ///
     /// # Example
     ///
-    /// ````
+    /// ```
     /// opts.set_write_buffer_size(128 * 1024 * 1024)
     /// ```
     pub fn set_write_buffer_size(&mut self, size: usize) {
@@ -130,7 +130,7 @@ impl OptionPy {
     ///
     /// # Example
     ///
-    /// ````
+    /// ```
     /// opts.set_target_file_size_base(128 * 1024 * 1024)
     /// ```
     pub fn set_target_file_size_base(&mut self, size: u64) {
@@ -143,7 +143,7 @@ impl OptionPy {
     ///
     /// # Example
     ///
-    /// ````
+    /// ```
     /// opts.set_min_write_buffer_number_to_merge(2)
     /// ```
     pub fn set_min_write_buffer_number_to_merge(&mut self, size: i32) {
@@ -156,7 +156,7 @@ impl OptionPy {
     ///
     /// # Example
     ///
-    /// ````
+    /// ```
     /// opts.set_level_zero_stop_writes_trigger(48)
     /// ```
     pub fn set_level_zero_stop_writes_trigger(&mut self, size: i32) {
@@ -170,7 +170,7 @@ impl OptionPy {
     ///
     /// # Example
     ///
-    /// ````
+    /// ```
     /// opts.set_level_zero_slowdown_writes_trigger(10)
     /// ```
     pub fn set_level_zero_slowdown_writes_trigger(&mut self, size: i32) {
@@ -183,7 +183,7 @@ impl OptionPy {
     ///
     /// # Example
     ///
-    /// ````
+    /// ```
     /// opts.set_disable_auto_compactions(True)
     /// ```
     pub fn set_disable_auto_compactions(&mut self, disable: bool) {
@@ -196,7 +196,7 @@ impl OptionPy {
     ///
     /// # Example
     ///
-    /// ````
+    /// ```
     /// opts.set_compaction_style('fifo')
     /// ```
     pub fn set_compaction_style(&mut self, style: &str) {
