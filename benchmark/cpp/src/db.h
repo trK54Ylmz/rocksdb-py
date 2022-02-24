@@ -7,16 +7,29 @@ using ROCKSDB_NAMESPACE::DB;
 using ROCKSDB_NAMESPACE::Options;
 using ROCKSDB_NAMESPACE::Status;
 
-static DB *get_db()
+// Open the database with fgice
+static DB *get_db(string path)
 {
     DB *db;
 
     Options opts;
     opts.create_if_missing = true;
 
-    Status status = DB::Open(opts, "/tmp/test", &db);
+    Status status = DB::Open(opts, path, &db);
 
     assert(status.ok());
 
     return db;
+}
+
+// Close active database and destroy
+static void destroy(DB *db, string path)
+{
+    delete db;
+
+    Options opts;
+
+    Status status = DestroyDB(path, opts);
+
+    assert(status.ok());
 }
