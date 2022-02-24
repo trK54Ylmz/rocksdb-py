@@ -6,7 +6,7 @@ pub const PREFIX: &str = "test_";
 /// Measure running time of the given function
 pub fn timeit<'a, F>(f: F, size: i32, db: &'a DB) -> u128
 where
-    F: Fn(&'a DB, i32) -> (),
+    F: Fn(&'a DB, i32),
 {
     let start = Instant::now();
 
@@ -18,9 +18,13 @@ where
 }
 
 /// Get value by given key
-pub fn get<'a>(db: &'a DB, key: &str) -> () {
+pub fn get<'a>(db: &'a DB, key: &str) -> Result<Option<String>, String> {
     // Get value by given key
-    db.get(key).unwrap();
+    match db.get(key) {
+        Ok(None) => Ok(None),
+        Ok(Some(value)) => Ok(Some(String::from_utf8(value).unwrap())),
+        Err(e) => Err(format!("{}", e)),
+    }
 }
 
 /// Set entry for given key and value
