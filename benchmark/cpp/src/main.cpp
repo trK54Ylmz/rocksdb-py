@@ -7,7 +7,7 @@ using ROCKSDB_NAMESPACE::DB;
 
 int main(int argc, char **argv)
 {
-    const int size = 1e4;
+    const int size = 10000;
 
     // Get RocksDB connection
     DB *db = get_db();
