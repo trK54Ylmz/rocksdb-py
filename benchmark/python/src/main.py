@@ -8,7 +8,7 @@ if __name__ == '__main__':
     db = get_db()
 
     get_key_f = lambda db, i: get_key(db, f'test_{i}'.encode('ascii'))
-    put_key_f = lambda db, i: put_key(db, f'test_{i}'.encode('ascii'), b"value")
+    put_key_f = lambda db, i: put_key(db, f'test_{i}'.encode('ascii'), b'value')
 
     put_key_diff = timeit(put_key_f, size, db)
     get_key_diff = timeit(get_key_f, size, db)
