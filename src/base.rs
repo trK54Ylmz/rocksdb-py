@@ -3,7 +3,6 @@ use crate::option::*;
 use pyo3::create_exception;
 use pyo3::exceptions::PyException;
 use pyo3::prelude::*;
-use pyo3::types::PyInt;
 use rocksdb::{Options, DB};
 use std::sync::Arc;
 use std::time::Duration;
@@ -72,12 +71,11 @@ pub fn open(path: &str, opts: &OptionPy) -> PyResult<RocksDBPy> {
 /// opts = Option()
 /// opts.create_if_missing(True)
 ///
-/// rocksdbpy.open_with_ttl('/tmp/test', opts, 5)
+/// rocksdbpy.open_with_ttl('/tmp/test', 5, opts)
 /// ```
 #[pyfunction]
-pub fn open_with_ttl(path: &str, opts: &OptionPy, ttl: &PyInt) -> PyResult<RocksDBPy> {
-    let secs = ttl.extract::<u64>().unwrap();
-    let duration = Duration::from_secs(secs);
+pub fn open_with_ttl(path: &str, ttl: u64, opts: &OptionPy) -> PyResult<RocksDBPy> {
+    let duration = Duration::from_secs(ttl);
 
     match DB::open_with_ttl(&opts.inner, path, duration) {
         Ok(db) => {
