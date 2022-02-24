@@ -41,9 +41,10 @@ int timeit(Function f, int size, DB *db)
 string get_key(DB *db, string key)
 {
     string value;
+    Status status;
 
     // Get value by given key
-    Status status = db->Get(ReadOptions(), key, &value);
+    status = db->Get(ReadOptions(), key, &value);
 
     if (!status.ok())
     {
@@ -53,14 +54,13 @@ string get_key(DB *db, string key)
     return value;
 }
 
-// Set entry for given key and value 
+// Set entry for given key and value
 void put_key(DB *db, string key, string value)
 {
     Status status;
-    WriteOptions opts;
 
     // Set key and value
-    status = db->Put(opts, key, value);
+    status = db->Put(WriteOptions(), key, value);
 
     assert(status.ok());
 }
