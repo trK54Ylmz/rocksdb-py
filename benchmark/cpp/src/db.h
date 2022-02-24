@@ -7,7 +7,7 @@ using ROCKSDB_NAMESPACE::DB;
 using ROCKSDB_NAMESPACE::Options;
 using ROCKSDB_NAMESPACE::Status;
 
-// Open the database with fgice
+// Open the database by given path
 static DB *get_db(string path)
 {
     DB *db;

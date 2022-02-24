@@ -17,11 +17,13 @@ where
     return start.elapsed().as_micros();
 }
 
+/// Get value by given key
 pub fn get<'a>(db: &'a DB, key: &str) -> () {
     // Get value by given key
     db.get(key).unwrap();
 }
 
+/// Set entry for given key and value
 pub fn put<'a>(db: &'a DB, key: &str, value: &str) {
     // Set key and value
     db.put(key, value).unwrap();
