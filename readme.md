@@ -57,7 +57,7 @@ size = batch.len()
 Close active database and release lock,
 
 ```python
-del db
+db.close()
 ```
 
 ### Build

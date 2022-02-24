@@ -138,4 +138,21 @@ impl RocksDBPy {
 
         Ok(result)
     }
+
+    /// Close active database
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// db.close()
+    /// ```
+    fn close(&mut self) -> PyResult<()> {
+        unsafe {
+            let db = Arc::from_raw(self.db.as_ref());
+
+            drop(db);
+        }
+
+        Ok(())
+    }
 }
