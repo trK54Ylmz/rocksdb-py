@@ -4,6 +4,8 @@ This folder contains simple benchmark of C++, Python and Rust libraries.
 
 ### Results
 
+The benchmark has been tested with 10.000 entry set and key lookup 20 times, and the charts represent results for C++, Python and Rust.
+
 These results ran on Mac Mini M1 2020 (16 GB memory).
 
 <p align="center">
