@@ -22,5 +22,6 @@ fn main() {
     println!("Put key = {}μs", put_key_diff);
     println!("Get key = {}μs", get_key_diff);
 
+    // Destroy database
     destroy(db, path);
 }
