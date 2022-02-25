@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 
 def open_default(path: str) -> DB:
@@ -81,6 +81,23 @@ class DB:
         Sets database entries for list of key and values as a batch.
 
         :param rocksdbpy.WriteBatch batch: The batch writer
+        """
+        ...
+
+    def multi_get(self, keys: List[bytes], skip_missing: Optional[bool]) -> List[bytes]:
+        """
+        Returns entries according to given list of key and values.
+
+        :param list[bytes] keys: The list of entry keys
+        :param bool or None skip_missing: Skips missing records if it's True
+        :return: The list of entry values
+        :rtype: list[bytes]
+        """
+        ...
+
+    def close(self):
+        """
+        Close active database
         """
         ...
 

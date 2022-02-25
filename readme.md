@@ -6,7 +6,7 @@ Python bindings for RocksDB written in Rust.
 
 ### Features
 
-* Get/set/delete
+* Get, set, delete, multi get
 * Destroy
 * Batch write
 
