@@ -14,7 +14,7 @@ impl RocksDBIteratorPy {
         slf
     }
 
-    /// Returns next database entry
+    /// Returns next database entry.
     ///
     /// # Example
     ///
