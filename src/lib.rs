@@ -1,11 +1,13 @@
 mod base;
 mod batch;
 mod db;
+mod iterator;
 mod option;
 
 use crate::base::*;
 use crate::batch::*;
 use crate::db::*;
+use crate::iterator::*;
 use crate::option::*;
 use pyo3::prelude::*;
 use pyo3::wrap_pyfunction;
@@ -13,6 +15,7 @@ use pyo3::wrap_pyfunction;
 #[pymodule]
 fn rocksdbpy(py: Python, m: &PyModule) -> PyResult<()> {
     m.add_class::<RocksDBPy>()?;
+    m.add_class::<RocksDBIteratorPy>()?;
     m.add_class::<OptionPy>()?;
     m.add_class::<WriteBatchPy>()?;
 

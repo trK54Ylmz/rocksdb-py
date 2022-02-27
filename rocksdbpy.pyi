@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Iterator, List, Optional, Tuple
 
 
 def open_default(path: str) -> DB:
@@ -95,6 +95,15 @@ class DB:
         """
         ...
 
+    def iterator(self) -> Iterator[DBIterator]:
+        """
+        Returns a heap-allocated iterator over the contents of the database.
+
+        :return: The database iterator
+        :rtype: iterator[rocksdbpy.DBIterator]
+        """
+        ...
+
     def flush(self):
         """
         Flushes database memtables to SST files on the disk using default options.
@@ -150,6 +159,16 @@ class WriteBatch:
         Clear the batch.
         """
         ...
+
+
+class DBIterator:
+    def __next__(self) -> Tuple[bytes, bytes]:
+        """
+        The next database entry
+
+        :return: The database entry
+        :rtype: (bytes, bytes)
+        """
 
 
 class RocksDBException(Exception):
