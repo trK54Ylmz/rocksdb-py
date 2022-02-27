@@ -1,8 +1,9 @@
 use crate::base::*;
 use crate::batch::*;
+use crate::iterator::*;
 use pyo3::prelude::*;
 use pyo3::types::{PyBytes, PyList};
-use rocksdb::DB;
+use rocksdb::{Direction, IteratorMode, DB};
 use std::sync::Arc;
 
 /// Base RocksDB database.
@@ -137,6 +138,53 @@ impl RocksDBPy {
         }
 
         Ok(result)
+    }
+
+    /// Returns a heap-allocated iterator over the contents of the database.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// iterator = db.iterator()
+    ///
+    /// iterator = db.iterator(mode='end')
+    ///
+    /// iterator = db.iterator(mode='from', key=b'test')
+    ///
+    /// iterator = db.iterator(mode='from', key=b'test', direction=-1)
+    /// ```
+    fn iterator(
+        &self,
+        mode: Option<&str>,
+        key: Option<&PyBytes>,
+        direction: Option<i32>,
+    ) -> PyResult<RocksDBIteratorPy> {
+        let mut im = IteratorMode::Start;
+
+        if !mode.is_none() {
+            let mut ik: &[u8] = b"";
+            let mut dr = Direction::Forward;
+
+            if !key.is_none() {
+                ik = key.unwrap().as_bytes();
+            }
+
+            // Generate direction by minus or plus integer
+            if !key.is_none() && !direction.is_none() {
+                dr = match direction.unwrap() {
+                    -1 => Direction::Reverse,
+                    _ => Direction::Forward,
+                }
+            }
+
+            im = match mode.unwrap() {
+                "end" => IteratorMode::End,
+                "from" => IteratorMode::From(ik, dr),
+                _ => IteratorMode::Start,
+            }
+        }
+
+        Ok(RocksDBIteratorPy::new(self.db.as_ref(), im))
     }
 
     /// Flushes database memtables to SST files on the disk using default options.
