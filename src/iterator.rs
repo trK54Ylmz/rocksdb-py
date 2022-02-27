@@ -14,6 +14,13 @@ impl RocksDBIteratorPy {
         slf
     }
 
+    /// Returns next database entry
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// next(iterator)
+    /// ```
     fn __next__(mut slf: PyRefMut<Self>) -> PyResult<Option<PyObject>> {
         for (k, v) in slf.inner.next() {
             let py = slf.py();
