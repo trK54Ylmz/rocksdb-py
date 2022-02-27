@@ -164,7 +164,7 @@ class WriteBatch:
 class DBIterator:
     def __next__(self) -> Tuple[bytes, bytes]:
         """
-        The next database entry
+        Returns next database entry
 
         :return: The database entry
         :rtype: (bytes, bytes)
