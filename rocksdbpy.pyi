@@ -95,6 +95,12 @@ class DB:
         """
         ...
 
+    def flush(self):
+        """
+        Flushes database memtables to SST files on the disk using default options.
+        """
+        ...
+
     def close(self):
         """
         Close active database
