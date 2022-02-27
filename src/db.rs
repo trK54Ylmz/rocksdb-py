@@ -139,6 +139,23 @@ impl RocksDBPy {
         Ok(result)
     }
 
+    /// Flushes database memtables to SST files on the disk using default options.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// db.flush()
+    /// ```
+    fn flush(&self) -> PyResult<()> {
+        match self.db.flush() {
+            Ok(_) => Ok(()),
+            Err(e) => Err(RocksDBPyException::new_err(format!(
+                "Database cannot flush. {}",
+                e,
+            ))),
+        }
+    }
+
     /// Close active database
     ///
     /// # Example
