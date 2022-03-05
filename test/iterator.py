@@ -1,10 +1,14 @@
 import unittest
 import rocksdbpy
+import shutil
+import tempfile
 from rocksdbpy import WriteBatch
 
 
 class TestIterator(unittest.TestCase):
     def setUp(self):
+        self.temp = tempfile.mkdtemp()
+
         wb = WriteBatch()
 
         # add couple of keys and values
@@ -15,6 +19,9 @@ class TestIterator(unittest.TestCase):
         self.db = rocksdbpy.open_default('/tmp/test_iterator')
 
         self.db.write(wb)
+
+    def tearDown(self) -> None:
+        shutil.rmtree(self.temp)
 
     def test_simple(self):
         # get iterator in default mode which is forward
