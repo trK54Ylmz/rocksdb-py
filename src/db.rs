@@ -210,13 +210,17 @@ impl RocksDBPy {
     ///
     /// ```
     /// db.close()
+    /// 
+    /// db.close(True)
     /// ```
-    fn close(&mut self) -> PyResult<()> {
-        unsafe {
-            let db = Arc::from_raw(self.db.as_ref());
+    fn close(&self, wait: Option<bool>) -> PyResult<()> {
+        let mut w: bool = false;
 
-            drop(db);
+        if wait.is_some() {
+            w = wait.unwrap()
         }
+
+        self.db.cancel_all_background_work(w);
 
         Ok(())
     }
