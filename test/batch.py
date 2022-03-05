@@ -9,7 +9,7 @@ class TestBatch(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.mkdtemp()
 
-    def tearDown(self) -> None:
+    def tearDown(self):
         shutil.rmtree(self.temp)
 
     def test_add(self):

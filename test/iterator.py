@@ -20,7 +20,7 @@ class TestIterator(unittest.TestCase):
 
         self.db.write(wb)
 
-    def tearDown(self) -> None:
+    def tearDown(self):
         shutil.rmtree(self.temp)
 
     def test_simple(self):
