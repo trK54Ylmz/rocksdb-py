@@ -16,7 +16,7 @@ class TestIterator(unittest.TestCase):
         wb.add(b'test_add_2', b'test_value')
         wb.add(b'test_add_3', b'test_value')
 
-        self.db = rocksdbpy.open_default('/tmp/test_iterator')
+        self.db = rocksdbpy.open_default(self.temp)
 
         self.db.write(wb)
 
