@@ -203,25 +203,4 @@ impl RocksDBPy {
             ))),
         }
     }
-
-    /// Close active database
-    ///
-    /// # Example
-    ///
-    /// ```
-    /// db.close()
-    /// 
-    /// db.close(True)
-    /// ```
-    fn close(&self, wait: Option<bool>) -> PyResult<()> {
-        let mut w: bool = false;
-
-        if wait.is_some() {
-            w = wait.unwrap()
-        }
-
-        self.db.cancel_all_background_work(w);
-
-        Ok(())
-    }
 }
