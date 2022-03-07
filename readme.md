@@ -9,6 +9,18 @@ Python bindings for RocksDB written in Rust.
 * Get, set, delete, multi get
 * Destroy
 * Batch write
+* Database iterator
+* Read options
+
+### Install
+
+To install a wheel from PyPI,
+
+```bash
+pip install --upgrade rocksdb-py
+```
+
+or if you want to build a wheel, see [build](https://github.com/trK54Ylmz/rocksdb-py#Build).
 
 ### Usage
 
