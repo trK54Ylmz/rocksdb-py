@@ -9,7 +9,11 @@ class TestBatch(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.mkdtemp()
 
+        self.db = rocksdbpy.open_default(self.temp)
+
     def tearDown(self):
+        del self.db
+
         shutil.rmtree(self.temp)
 
     def test_add(self):
@@ -35,9 +39,7 @@ class TestBatch(unittest.TestCase):
         self.assertEqual(wb.len(), 0)
 
     def test_write(self):
-        db = rocksdbpy.open_default(self.temp)
-
-        self.assertIsNone(db.get(b'test_add_1'))
+        self.assertIsNone(self.db.get(b'test_add_1'))
 
         wb = WriteBatch()
 
@@ -47,6 +49,6 @@ class TestBatch(unittest.TestCase):
 
         self.assertEqual(wb.len(), 2)
 
-        db.write(wb)
+        self.db.write(wb)
 
-        self.assertEqual(db.get(b'test_add_1'), b'test_value')
+        self.assertEqual(self.db.get(b'test_add_1'), b'test_value')
