@@ -21,6 +21,8 @@ class TestIterator(unittest.TestCase):
         self.db.write(wb)
 
     def tearDown(self):
+        del self.db
+
         shutil.rmtree(self.temp)
 
     def test_simple(self):
@@ -75,4 +77,4 @@ class TestIterator(unittest.TestCase):
         # get invalid iterator
         itr = self.db.iterator(mode='from', direction=-1)
 
-        self.assertEqual(0, len(list(itr)))
+        self.assertEqual(3, len(list(itr)))
