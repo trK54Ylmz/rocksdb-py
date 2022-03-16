@@ -9,7 +9,7 @@ use std::sync::Arc;
 /// Base RocksDB database.
 #[pyclass(name = "RocksDB")]
 pub struct RocksDBPy {
-    pub db: Arc<DB>,
+    pub db: Option<Arc<DB>>,
     pub path: Vec<u8>,
 }
 
@@ -22,14 +22,18 @@ impl RocksDBPy {
     /// ```
     /// value = db.get(b'key')
     /// ```
-    fn get<'py>(&mut self, py: Python<'py>, key: &PyBytes) -> PyResult<Option<&'py PyBytes>> {
-        match self.db.get(key.as_bytes()) {
-            Ok(None) => Ok(None),
-            Ok(Some(value)) => Ok(Some(PyBytes::new(py, &value))),
-            Err(e) => Err(RocksDBPyException::new_err(format!(
-                "Record cannot get. {}",
-                e
-            ))),
+    fn get<'py>(&self, py: Python<'py>, key: &PyBytes) -> PyResult<Option<&'py PyBytes>> {
+        if let Some(db) = &self.db {
+            match db.get(key.as_bytes()) {
+                Ok(None) => Ok(None),
+                Ok(Some(value)) => Ok(Some(PyBytes::new(py, &value))),
+                Err(e) => Err(RocksDBPyException::new_err(format!(
+                    "Record cannot get. {}",
+                    e
+                ))),
+            }
+        } else {
+            Err(RocksDBPyException::new_err("Record cannot get"))
         }
     }
 
@@ -41,12 +45,16 @@ impl RocksDBPy {
     /// db.set(b'key', b'value')
     /// ```
     fn set(&mut self, key: &PyBytes, value: &PyBytes) -> PyResult<()> {
-        match self.db.put(key.as_bytes(), value.as_bytes()) {
-            Ok(()) => Ok(()),
-            Err(e) => Err(RocksDBPyException::new_err(format!(
-                "Record cannot set. {}",
-                e
-            ))),
+        if let Some(db) = &self.db {
+            match db.put(key.as_bytes(), value.as_bytes()) {
+                Ok(()) => Ok(()),
+                Err(e) => Err(RocksDBPyException::new_err(format!(
+                    "Record cannot set. {}",
+                    e
+                ))),
+            }
+        } else {
+            Err(RocksDBPyException::new_err("Record cannot set"))
         }
     }
 
@@ -58,12 +66,16 @@ impl RocksDBPy {
     /// db.delete(b'key')
     /// ```
     fn delete(&mut self, key: &PyBytes) -> PyResult<()> {
-        match self.db.delete(key.as_bytes()) {
-            Ok(()) => Ok(()),
-            Err(e) => Err(RocksDBPyException::new_err(format!(
-                "Record cannot remove. {}",
-                e
-            ))),
+        if let Some(db) = &self.db {
+            match db.delete(key.as_bytes()) {
+                Ok(()) => Ok(()),
+                Err(e) => Err(RocksDBPyException::new_err(format!(
+                    "Record cannot remove. {}",
+                    e
+                ))),
+            }
+        } else {
+            Err(RocksDBPyException::new_err("Record cannot remove"))
         }
     }
 
@@ -82,12 +94,19 @@ impl RocksDBPy {
         let wr = batch.get().unwrap();
         let len = wr.len();
 
-        match self.db.write(wr) {
-            Ok(_) => Ok(()),
-            Err(e) => Err(RocksDBPyException::new_err(format!(
-                "Batch cannot write {} elements. {}",
-                len, e,
-            ))),
+        if let Some(db) = &self.db {
+            match db.write(wr) {
+                Ok(_) => Ok(()),
+                Err(e) => Err(RocksDBPyException::new_err(format!(
+                    "Batch cannot write {} elements. {}",
+                    len, e,
+                ))),
+            }
+        } else {
+            Err(RocksDBPyException::new_err(format!(
+                "Batch cannot write {} elements",
+                len
+            )))
         }
     }
 
@@ -112,32 +131,35 @@ impl RocksDBPy {
             .map(|k| <PyBytes as PyTryFrom>::try_from(k).unwrap().as_bytes())
             .collect();
 
-        let result = PyList::empty(py);
+        let r = PyList::empty(py);
+        let skip = skip_missings.is_none() || skip_missings.unwrap() == false;
 
-        for value in self.db.multi_get(ks) {
-            match value {
-                Ok(v) => match v {
-                    Some(item) => result.append(PyBytes::new(py, item.as_ref())).unwrap(),
-                    None => {
-                        // skip missing records if skip_missings is true, the output array will
-                        // be shorter then given key array size.
-                        if skip_missings.is_none() || skip_missings.unwrap() == false {
-                            result.append(py.None()).unwrap()
-                        } else {
-                            continue;
+        if let Some(db) = &self.db {
+            for value in db.multi_get(ks) {
+                match value {
+                    Ok(v) => match v {
+                        Some(item) => r.append(PyBytes::new(py, item.as_ref())).unwrap(),
+                        None => {
+                            // skip missing records if skip_missings is true, the output
+                            // array will be shorter then given key array size.
+                            if skip {
+                                r.append(py.None()).unwrap()
+                            } else {
+                                continue;
+                            }
                         }
+                    },
+                    Err(e) => {
+                        return Err(RocksDBPyException::new_err(format!(
+                            "Record cannot get. {}",
+                            e,
+                        )))
                     }
-                },
-                Err(e) => {
-                    return Err(RocksDBPyException::new_err(format!(
-                        "Record cannot get. {}",
-                        e,
-                    )))
                 }
             }
         }
 
-        Ok(result)
+        Ok(r)
     }
 
     /// Returns a heap-allocated iterator over the contents of the database.
@@ -184,7 +206,36 @@ impl RocksDBPy {
             }
         }
 
-        Ok(RocksDBIteratorPy::new(self.db.as_ref(), im))
+        if let Some(db) = &self.db {
+            Ok(RocksDBIteratorPy::new(db.as_ref(), im))
+        } else {
+            Err(RocksDBPyException::new_err("Iterator cannot get"))
+        }
+    }
+
+    /// Request stopping background work, if wait is true wait until it’s done.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// db.cancel_all_background_work()
+    ///
+    /// db.cancel_all_background_work(True)
+    /// ```
+    fn cancel_all_background_work(&self, wait: Option<bool>) -> PyResult<()> {
+        let mut w = false;
+
+        if wait.is_some() {
+            w = wait.unwrap()
+        }
+
+        if let Some(db) = &self.db {
+            db.cancel_all_background_work(w);
+
+            Ok(())
+        } else {
+            Err(RocksDBPyException::new_err("Cancel cannot do"))
+        }
     }
 
     /// Flushes database memtables to SST files on the disk using default options.
@@ -195,12 +246,29 @@ impl RocksDBPy {
     /// db.flush()
     /// ```
     fn flush(&self) -> PyResult<()> {
-        match self.db.flush() {
-            Ok(_) => Ok(()),
-            Err(e) => Err(RocksDBPyException::new_err(format!(
-                "Database cannot flush. {}",
-                e,
-            ))),
+        if let Some(db) = &self.db {
+            match db.flush() {
+                Ok(_) => Ok(()),
+                Err(e) => Err(RocksDBPyException::new_err(format!(
+                    "Database cannot flush. {}",
+                    e,
+                ))),
+            }
+        } else {
+            Err(RocksDBPyException::new_err("Database cannot flush"))
         }
+    }
+
+    /// Close active database
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// db.close()
+    /// ```
+    fn close(&mut self) -> PyResult<()> {
+        self.db = None;
+
+        Ok(())
     }
 }

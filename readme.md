@@ -61,7 +61,7 @@ rocksdbpy.destroy('/tmp/rocksdb')
 Close active database and release lock.
 
 ```python
-del db
+db.close()
 ```
 
 #### Simple read, set and delete

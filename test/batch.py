@@ -12,7 +12,7 @@ class TestBatch(unittest.TestCase):
         self.db = rocksdbpy.open_default(self.temp)
 
     def tearDown(self):
-        del self.db
+        self.db.close()
 
         shutil.rmtree(self.temp)
 
