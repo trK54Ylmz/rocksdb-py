@@ -21,7 +21,7 @@ class TestIterator(unittest.TestCase):
         self.db.write(wb)
 
     def tearDown(self):
-        del self.db
+        self.db.close()
 
         shutil.rmtree(self.temp)
 

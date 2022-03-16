@@ -22,7 +22,7 @@ pub fn open_default(path: &str) -> PyResult<RocksDBPy> {
     match DB::open_default(path) {
         Ok(db) => {
             let db = RocksDBPy {
-                db: Arc::new(db),
+                db: Some(Arc::new(db)),
                 path: path.as_bytes().to_vec(),
             };
 
@@ -50,7 +50,7 @@ pub fn open(path: &str, opts: &OptionPy) -> PyResult<RocksDBPy> {
     match DB::open(&opts.inner, path) {
         Ok(db) => {
             let db = RocksDBPy {
-                db: Arc::new(db),
+                db: Some(Arc::new(db)),
                 path: path.as_bytes().to_vec(),
             };
 
@@ -80,7 +80,7 @@ pub fn open_with_ttl(path: &str, ttl: u64, opts: &OptionPy) -> PyResult<RocksDBP
     match DB::open_with_ttl(&opts.inner, path, duration) {
         Ok(db) => {
             let db = RocksDBPy {
-                db: Arc::new(db),
+                db: Some(Arc::new(db)),
                 path: path.as_bytes().to_vec(),
             };
 

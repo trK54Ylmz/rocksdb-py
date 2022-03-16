@@ -1,13 +1,15 @@
-[package]
+[project]
 name = "rocksdb-py"
-version = "0.0.1"
-license = "Apache-2.0"
+version = "0.0.2"
 readme = "readme.md"
-authors = ["Tarik Yilmaz <tarikyilmaz.54@gmail.com>"]
 homepage = "https://github.com/trk54ylmz/rocksdb-py"
 repository = "https://github.com/trk54ylmz/rocksdb-py"
 description = "Python bindings for RocksDB"
 keywords = ["rocksdb", "rocksdb-py"]
+license = {file = "license"}
+authors = [
+    {name = "Tarik Yilmaz", email = "<tarikyilmaz.54@gmail.com>"}
+]
 
 [build-system]
 requires = ["maturin>=0.12,<0.13"]
