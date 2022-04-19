@@ -2,8 +2,6 @@
 
 Python bindings for RocksDB written in Rust.
 
-**Note**: This package is under active development.
-
 ### Features
 
 * Get, set, delete, multi get
