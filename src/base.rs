@@ -95,6 +95,91 @@ pub fn open_with_ttl(path: &str, ttl: u64, opts: &OptionPy) -> PyResult<RocksDBP
     }
 }
 
+/// Opens the database for read only with the specified options.
+///
+/// # Example
+///
+/// ```
+/// opts = Option()
+///
+/// rocksdbpy.open_for_readonly('/tmp/test')
+///
+/// rocksdbpy.open_for_readonly('/tmp/test', opts)
+///
+/// rocksdbpy.open_for_readonly('/tmp/test', opts, False)
+/// ```
+#[pyfunction]
+pub fn open_for_readonly(
+    path: &str,
+    option: Option<OptionPy>,
+    error: Option<bool>,
+) -> PyResult<RocksDBPy> {
+    let mut err: bool = false;
+    let mut opts: Options = Options::default();
+
+    if !option.is_none() {
+        opts = option.unwrap().inner;
+    }
+
+    if !error.is_none() {
+        err = false;
+    }
+
+    match DB::open_for_read_only(&opts, path, err) {
+        Ok(db) => {
+            let db = RocksDBPy {
+                db: Some(Arc::new(db)),
+                path: path.as_bytes().to_vec(),
+            };
+
+            return Ok(db);
+        }
+        Err(e) => Err(RocksDBPyException::new_err(format!(
+            "Database cannot be open for read only, {}",
+            e
+        ))),
+    }
+}
+
+/// Opens the database as a secondary.
+///
+/// # Example
+///
+/// ```
+/// opts = Option()
+///
+/// rocksdbpy.open_as_secondary('/tmp/test/1', '/tmp/test/2')
+///
+/// rocksdbpy.open_as_secondary('/tmp/test/1', '/tmp/test/2', opts)
+/// ```
+#[pyfunction]
+pub fn open_as_secondary(
+    primary: &str,
+    secondary: &str,
+    option: Option<OptionPy>,
+) -> PyResult<RocksDBPy> {
+    let mut opts: Options = Options::default();
+
+    if !option.is_none() {
+        opts = option.unwrap().inner;
+    }
+
+    match DB::open_as_secondary(&opts, primary, secondary) {
+        Ok(db) => {
+            let db = RocksDBPy {
+                db: Some(Arc::new(db)),
+                path: secondary.as_bytes().to_vec(),
+            };
+
+            return Ok(db);
+        }
+        Err(e) => Err(RocksDBPyException::new_err(format!(
+            "Database cannot be open for read only, {}",
+            e
+        ))),
+    }
+}
+
 /// Destroy database and it's files.
 ///
 /// # Example

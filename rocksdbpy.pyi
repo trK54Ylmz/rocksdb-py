@@ -38,6 +38,34 @@ def open_with_ttl(path: str, ttl: int, opts: Optional[Option]) -> DB:
     ...
 
 
+def open_for_readonly(path: str, option: Optional[Option], error: Optional[bool]) -> DB:
+    """
+    Opens the database for read only with the specified options.
+
+    :param str path: The database path
+    :param rocksdbpy.Option or None option: The options
+    :param bool or None error: Raise an error if write ahead log exists
+    :return: active database
+    :rtype: rocksdbpy.DB
+
+    """
+    ...
+
+
+def open_as_secondary(primary: str, secondary: str, option: Optional[Option]) -> DB:
+    """
+    Opens the database as a secondary.
+
+    :param str primary: The database primary path
+    :param str secondary: The directory where the secondary instance stores its info log
+    :param rocksdbpy.Option or None option: The options
+    :return: active database
+    :rtype: rocksdbpy.DB
+
+    """
+    ...
+
+
 def destroy(path: str, opts: Optional[Option]) -> None:
     """
     Destroy database and it's files.
