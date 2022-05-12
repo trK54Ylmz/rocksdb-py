@@ -1,20 +1,22 @@
-use rocksdb::DB;
-use std::time::Instant;
+use rocksdb::{WriteBatch, DB};
+use time;
 
-pub const PREFIX: &str = "test_";
+pub const PREFIX: &str = "test";
 
 /// Measure running time of the given function
-pub fn timeit<'a, F>(f: F, size: i32, db: &'a DB) -> u128
+pub fn timeit<'a, F>(f: F, size: i32, db: &'a DB) -> u64
 where
     F: Fn(&'a DB, i32),
 {
-    let start = Instant::now();
+    let start = time::precise_time_ns();
 
-    for _ in 0..size - 1 {
-        f(db, size);
+    for i in 0..size {
+        f(db, i);
     }
 
-    return start.elapsed().as_micros();
+    let end = time::precise_time_ns();
+
+    return (end - start) / 1000;
 }
 
 /// Get value by given key
@@ -31,4 +33,15 @@ pub fn get<'a>(db: &'a DB, key: &str) -> Result<Option<String>, String> {
 pub fn put<'a>(db: &'a DB, key: &str, value: &str) {
     // Set key and value
     db.put(key, value).unwrap();
+}
+
+/// Set multiple entries for given group of keys and values
+pub fn put_multi<'a>(db: &'a DB, keys: &[&str], values: &[&str]) {
+    let mut b = WriteBatch::default();
+
+    for i in 0..keys.len() {
+        b.put(keys[i], values[i])
+    }
+
+    db.write(b).unwrap()
 }

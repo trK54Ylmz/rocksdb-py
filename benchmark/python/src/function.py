@@ -1,4 +1,5 @@
 import time
+from rocksdbpy import WriteBatch
 
 
 def timeit(f, size, db):
@@ -15,7 +16,7 @@ def timeit(f, size, db):
     return int((end - start) / 1000)
 
 
-def get_key(db, key):
+def get(db, key):
     """
     Get value by given key
     """
@@ -27,8 +28,20 @@ def get_key(db, key):
     return value
 
 
-def put_key(db, key, value):
+def put(db, key, value):
     """
     Set entry for given key and value
     """
     db.set(key, value)
+
+
+def put_multi(db, keys, values):
+    """
+    Set multiple entries for given group of keys and values
+    """
+    b = WriteBatch()
+
+    for i in range(len(keys)):
+        b.add(keys[i], values[i])
+
+    db.write(b)

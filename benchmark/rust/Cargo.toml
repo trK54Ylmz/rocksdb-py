@@ -5,4 +5,5 @@ edition = "2021"
 description = "RocksDB benchmarks for Rust"
 
 [dependencies]
+time = { version = "0.1.40" }
 rocksdb = { version = "0.17.0", features = ["snappy", "lz4", "zstd", "zlib", "bzip2"] }

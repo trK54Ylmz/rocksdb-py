@@ -11,6 +11,7 @@ These results ran on Mac Mini M1 2020 (16 GB memory).
 <p align="center">
 <img src="./static/get.png" width="500">
 <img src="./static/put.png" width="500">
+<img src="./static/batch.png" width="500">
 </p>
 
 ### C++
