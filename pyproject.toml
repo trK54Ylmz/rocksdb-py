@@ -6,9 +6,9 @@ homepage = "https://github.com/trk54ylmz/rocksdb-py"
 repository = "https://github.com/trk54ylmz/rocksdb-py"
 description = "Python bindings for RocksDB"
 keywords = ["rocksdb", "rocksdb-py"]
-license = {file = "license"}
+license = {text = "Apache-2.0"}
 authors = [
-    {name = "Tarik Yilmaz", email = "<tarikyilmaz.54@gmail.com>"}
+    {name = "Tarik Yilmaz", email = "tarikyilmaz.54@gmail.com"}
 ]
 
 [build-system]
