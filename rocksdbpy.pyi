@@ -123,10 +123,18 @@ class DB:
         """
         ...
 
-    def iterator(self) -> Iterator[DBIterator]:
+    def iterator(
+        self,
+        mode: Optional[str],
+        key: Optional[bytes],
+        direction: Optional[int] = 1,
+    ) -> Iterator[DBIterator]:
         """
         Returns a heap-allocated iterator over the contents of the database.
 
+        :param str or None mode: The iteration mode. Accepted options are "from", "end" and "start"
+        :param bytes or None key: The iterator start key
+        :param int or None direction: The iteration direction. Default is forward
         :return: The database iterator
         :rtype: iterator[rocksdbpy.DBIterator]
         """
