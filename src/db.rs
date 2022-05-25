@@ -8,13 +8,13 @@ use std::sync::Arc;
 
 /// Base RocksDB database.
 #[pyclass(name = "RocksDB")]
-pub struct RocksDBPy {
-    pub db: Option<Arc<DB>>,
+pub struct DBPy {
     pub path: Vec<u8>,
+    pub db: Option<Arc<DB>>,
 }
 
 #[pymethods]
-impl RocksDBPy {
+impl DBPy {
     /// Return the value associated with a "key".
     ///
     /// # Example
@@ -180,7 +180,7 @@ impl RocksDBPy {
         mode: Option<&str>,
         key: Option<&PyBytes>,
         direction: Option<i32>,
-    ) -> PyResult<RocksDBIteratorPy> {
+    ) -> PyResult<IteratorPy> {
         let mut im = IteratorMode::Start;
 
         if !mode.is_none() {
@@ -207,7 +207,7 @@ impl RocksDBPy {
         }
 
         if let Some(db) = &self.db {
-            Ok(RocksDBIteratorPy::new(db.as_ref(), im))
+            Ok(IteratorPy::new(db.as_ref(), im))
         } else {
             Err(RocksDBPyException::new_err("Iterator cannot get"))
         }

@@ -18,10 +18,10 @@ create_exception!(rocksdbpy, RocksDBPyException, PyException);
 /// rocksdbpy.open_default('/tmp/test')
 /// ```
 #[pyfunction]
-pub fn open_default(path: &str) -> PyResult<RocksDBPy> {
+pub fn open_default(path: &str) -> PyResult<DBPy> {
     match DB::open_default(path) {
         Ok(db) => {
-            let db = RocksDBPy {
+            let db = DBPy {
                 db: Some(Arc::new(db)),
                 path: path.as_bytes().to_vec(),
             };
@@ -46,10 +46,10 @@ pub fn open_default(path: &str) -> PyResult<RocksDBPy> {
 /// rocksdbpy.open('/tmp/test', opts)
 /// ```
 #[pyfunction]
-pub fn open(path: &str, opts: &OptionPy) -> PyResult<RocksDBPy> {
+pub fn open(path: &str, opts: &OptionPy) -> PyResult<DBPy> {
     match DB::open(&opts.inner, path) {
         Ok(db) => {
-            let db = RocksDBPy {
+            let db = DBPy {
                 db: Some(Arc::new(db)),
                 path: path.as_bytes().to_vec(),
             };
@@ -74,12 +74,12 @@ pub fn open(path: &str, opts: &OptionPy) -> PyResult<RocksDBPy> {
 /// rocksdbpy.open_with_ttl('/tmp/test', 5, opts)
 /// ```
 #[pyfunction]
-pub fn open_with_ttl(path: &str, ttl: u64, opts: &OptionPy) -> PyResult<RocksDBPy> {
+pub fn open_with_ttl(path: &str, ttl: u64, opts: &OptionPy) -> PyResult<DBPy> {
     let duration = Duration::from_secs(ttl);
 
     match DB::open_with_ttl(&opts.inner, path, duration) {
         Ok(db) => {
-            let db = RocksDBPy {
+            let db = DBPy {
                 db: Some(Arc::new(db)),
                 path: path.as_bytes().to_vec(),
             };
@@ -113,7 +113,7 @@ pub fn open_for_readonly(
     path: &str,
     option: Option<OptionPy>,
     error: Option<bool>,
-) -> PyResult<RocksDBPy> {
+) -> PyResult<DBPy> {
     let mut err: bool = false;
     let mut opts: Options = Options::default();
 
@@ -127,7 +127,7 @@ pub fn open_for_readonly(
 
     match DB::open_for_read_only(&opts, path, err) {
         Ok(db) => {
-            let db = RocksDBPy {
+            let db = DBPy {
                 db: Some(Arc::new(db)),
                 path: path.as_bytes().to_vec(),
             };
@@ -157,7 +157,7 @@ pub fn open_as_secondary(
     primary: &str,
     secondary: &str,
     option: Option<OptionPy>,
-) -> PyResult<RocksDBPy> {
+) -> PyResult<DBPy> {
     let mut opts: Options = Options::default();
 
     if !option.is_none() {
@@ -166,7 +166,7 @@ pub fn open_as_secondary(
 
     match DB::open_as_secondary(&opts, primary, secondary) {
         Ok(db) => {
-            let db = RocksDBPy {
+            let db = DBPy {
                 db: Some(Arc::new(db)),
                 path: secondary.as_bytes().to_vec(),
             };

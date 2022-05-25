@@ -14,8 +14,8 @@ use pyo3::wrap_pyfunction;
 
 #[pymodule]
 fn rocksdbpy(py: Python, m: &PyModule) -> PyResult<()> {
-    m.add_class::<RocksDBPy>()?;
-    m.add_class::<RocksDBIteratorPy>()?;
+    m.add_class::<DBPy>()?;
+    m.add_class::<IteratorPy>()?;
     m.add_class::<OptionPy>()?;
     m.add_class::<WriteBatchPy>()?;
 
