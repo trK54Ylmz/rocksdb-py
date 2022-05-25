@@ -73,8 +73,14 @@ class TestIterator(unittest.TestCase):
 
             i -= 1
 
-    def test_invalid_reverse(self):
-        # get invalid iterator
+    def test_count(self):
+        # get random iterator
         itr = self.db.iterator(mode='from', direction=-1)
 
-        self.assertEqual(3, len(list(itr)))
+        self.assertEqual(3, itr.len())
+
+    def test_valid(self):
+        # get random iterator
+        itr = self.db.iterator(mode='from', direction=-1)
+
+        self.assertTrue(itr.valid())
