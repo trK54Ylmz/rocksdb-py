@@ -1,7 +1,7 @@
 from typing import Iterator, List, Optional, Tuple
 
 
-def open_default(path: str) -> DB:
+def open_default(path: str) -> RocksDB:
     """
     Opens a database with default options.
 
@@ -12,7 +12,7 @@ def open_default(path: str) -> DB:
     ...
 
 
-def open(path: str, opts: Optional[Option]) -> DB:
+def open(path: str, opts: Optional[Option]) -> RocksDB:
     """
     Opens the database with the specified options.
 
@@ -24,7 +24,7 @@ def open(path: str, opts: Optional[Option]) -> DB:
     ...
 
 
-def open_with_ttl(path: str, ttl: int, opts: Optional[Option]) -> DB:
+def open_with_ttl(path: str, ttl: int, opts: Optional[Option]) -> RocksDB:
     """
     Opens the database with TTL compaction filter.
 
@@ -38,7 +38,7 @@ def open_with_ttl(path: str, ttl: int, opts: Optional[Option]) -> DB:
     ...
 
 
-def open_for_readonly(path: str, option: Optional[Option], error: Optional[bool]) -> DB:
+def open_for_readonly(path: str, option: Optional[Option], error: Optional[bool]) -> RocksDB:
     """
     Opens the database for read only with the specified options.
 
@@ -52,7 +52,7 @@ def open_for_readonly(path: str, option: Optional[Option], error: Optional[bool]
     ...
 
 
-def open_as_secondary(primary: str, secondary: str, option: Optional[Option]) -> DB:
+def open_as_secondary(primary: str, secondary: str, option: Optional[Option]) -> RocksDB:
     """
     Opens the database as a secondary.
 
@@ -76,7 +76,7 @@ def destroy(path: str, opts: Optional[Option]) -> None:
     ...
 
 
-class DB:
+class RocksDB:
     def get(self, key: bytes) -> Optional[bytes]:
         """
         Return the value associated with a "key".
@@ -200,10 +200,23 @@ class WriteBatch:
 class DBIterator:
     def __next__(self) -> Tuple[bytes, bytes]:
         """
-        Returns next database entry
+        Returns next database entry.
 
         :return: The database entry
         :rtype: (bytes, bytes)
+        """
+
+    def len(self) -> int:
+        """
+        Returns element count of the iterator.
+
+        :return: The element count of the iterator
+        :rtype: int
+        """
+
+    def close(self) -> None:
+        """
+        Close and destroy active iterator
         """
 
 

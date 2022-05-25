@@ -190,6 +190,60 @@ impl OptionPy {
         self.inner.set_disable_auto_compactions(disable)
     }
 
+    /// Sets unordered_write to true trades higher write throughput with relaxing the immutability
+    /// guarantee of snapshots.
+    ///
+    /// Default: `False`
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// opts.set_unordered_write(True)
+    /// ```
+    pub fn set_unordered_write(&mut self, unordered: bool) {
+        self.inner.set_unordered_write(unordered)
+    }
+
+    /// Sets maximum number of threads that will concurrently perform a compaction job by breaking
+    /// it into multiple, smaller ones that are run simultaneously.
+    ///
+    /// Default: `1`
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// opts.set_max_subcompactions(4)
+    /// ```
+    pub fn set_max_subcompactions(&mut self, num: u32) {
+        self.inner.set_max_subcompactions(num)
+    }
+
+    /// Sets maximum number of concurrent background jobs (compactions and flushes).
+    ///
+    /// Default: `2`
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// opts.set_max_background_jobs(8)
+    /// ```
+    pub fn set_max_background_jobs(&mut self, jobs: i32) {
+        self.inner.set_max_background_jobs(jobs)
+    }
+
+    /// Control locality of bloom filter probes to improve cache miss rate.
+    ///
+    /// Default: `0`
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// opts.set_bloom_locality(16)
+    /// ```
+    pub fn set_bloom_locality(&mut self, val: u32) {
+        self.inner.set_bloom_locality(val)
+    }
+
     /// Sets the compaction style.
     ///
     /// Default: `level`
