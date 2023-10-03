@@ -10,4 +10,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 rocksdb = { version = "0.21.0", features = ["snappy", "lz4", "zstd", "zlib", "bzip2"] }
-pyo3 = { version = "0.16.5", features = ["extension-module"] }
+pyo3 = { version = "0.19.2", features = ["extension-module"] }
