@@ -27,11 +27,17 @@ impl IteratorPy {
             match inner.next() {
                 None => Ok(None),
                 Some(kv) => {
-                    let py = slf.py();
-                    let key = PyBytes::new(py, kv.0.as_ref());
-                    let value = PyBytes::new(py, kv.1.as_ref());
-
-                    return Ok(Some(PyTuple::new(py, &[key, value]).into_py(py)));
+                    match kv {
+                        Ok(kv) => {
+                            let py = slf.py();
+                            let key = PyBytes::new(py, kv.0.as_ref());
+                            let value = PyBytes::new(py, kv.1.as_ref());
+                            return Ok(Some(PyTuple::new(py, &[key, value]).into_py(py)));
+                        },
+                        Err(_err) => {
+                            Err(RocksDBPyException::new_err("Iterator completed?"))
+                        }
+                    }
                 }
             }
         } else {
@@ -66,22 +72,6 @@ impl IteratorPy {
             Ok(inner.count())
         } else {
             Err(RocksDBPyException::new_err("Count cannot get"))
-        }
-    }
-
-    /// Returns true if the iterator is valid. An iterator is invalidated when it reaches the end
-    /// of its defined range, or when it encounters an error.
-    ///
-    /// # Example
-    ///
-    /// ```
-    /// valid = itr.valid()
-    /// ```
-    fn valid(mut slf: PyRefMut<Self>) -> PyResult<bool> {
-        if let Some(inner) = &mut slf.inner {
-            Ok(inner.valid())
-        } else {
-            Err(RocksDBPyException::new_err("Valid cannot get"))
         }
     }
 

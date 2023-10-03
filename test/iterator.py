@@ -78,9 +78,3 @@ class TestIterator(unittest.TestCase):
         itr = self.db.iterator(mode='from', direction=-1)
 
         self.assertEqual(3, itr.len())
-
-    def test_valid(self):
-        # get random iterator
-        itr = self.db.iterator(mode='from', direction=-1)
-
-        self.assertTrue(itr.valid())

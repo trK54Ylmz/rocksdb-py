@@ -263,4 +263,16 @@ impl OptionPy {
 
         self.inner.set_compaction_style(c)
     }
+
+    /// Allow the OS to mmap file for reading ss tables
+    ///
+    /// Default: false
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_allow_mmap_reads(True)
+    /// ```
+    pub fn set_allow_mmap_reads(&mut self, is_enabled: bool) {
+        self.inner.set_allow_mmap_reads(is_enabled)
+    }
 }
