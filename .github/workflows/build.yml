@@ -83,7 +83,7 @@ jobs:
           override: true
       - name: Install CLang
         uses: KyleMayes/install-llvm-action@v1.9.0
-        if: ${{ (matrix.platform.os == 'macOS-latest') || (runner.os == 'Windows') }}
+        if: ${{ (matrix.platform.name == 'macOS x64') || (runner.os == 'Windows') }}
         with:
           version: "11.0"
           directory: ${{ runner.temp }}/llvm
@@ -94,7 +94,7 @@ jobs:
         run: |
           echo "MACOSX_DEPLOYMENT_TARGET=10.14" >> ${GITHUB_ENV}
           echo "CXXFLAGS=-stdlib=libc++ CC=clang CXX=clang++" >> ${GITHUB_ENV}
-        if: matrix.platform.os == 'macOS-latest'
+        if: matrix.platform.name == 'macOS x64'
       - name: Install dependencies
         run: pip install maturin pygithub
       - name: Build package Linux
@@ -116,7 +116,7 @@ jobs:
         run: python .github/build/install.py ${{ matrix.python.name }}
       - name: Run pytest
         run: python -m unittest test
-        if: matrix.platform.os != 'macOS-11'
+        if: matrix.platform.name != 'macOS arm64'
       - name: Upload package
         env:
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
