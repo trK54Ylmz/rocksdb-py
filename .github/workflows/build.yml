@@ -82,8 +82,9 @@ jobs:
           profile: minimal
           override: true
       - name: Install CLang
-        uses: KyleMayes/install-llvm-action@v1
-        if: runner.os == 'Windows'
+        uses: KyleMayes/install-llvm-action@v1.9.0
+        if: 
+        if: ${{ (matrix.platform.os == 'macOS-latest') || (runner.os == 'Windows') }}
         with:
           version: "11.0"
           directory: ${{ runner.temp }}/llvm
