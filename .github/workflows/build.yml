@@ -108,12 +108,12 @@ jobs:
       - name: Build package macOS
         env:
           PY_LOCATION: ${{ env.pythonLocation }}
-        run: maturin build --release --no-sdist --interpreter ${PY_LOCATION}/bin/python
+        run: maturin build --release --interpreter ${PY_LOCATION}/bin/python
         if: runner.os == 'macOS'
       - name: Build package Windows
         env:
           PY_LOCATION: ${{ env.pythonLocation }}
-        run: maturin build --release --no-sdist --interpreter ${env:PY_LOCATION}\python.exe
+        run: maturin build --release --interpreter ${env:PY_LOCATION}\python.exe
         if: runner.os == 'Windows'
       - name: Install package
         run: python .github/build/install.py ${{ matrix.python.name }}
