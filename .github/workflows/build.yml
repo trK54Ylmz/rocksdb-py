@@ -13,14 +13,6 @@ jobs:
       matrix:
         python: [
           {
-            name: "cp37-cp37m",
-            version: "3.7"
-          },
-          {
-            name: "cp38-cp38",
-            version: "3.8"
-          },
-          {
             name: "cp39-cp39",
             version: "3.9"
           },
@@ -102,8 +94,8 @@ jobs:
         run: pip install maturin pygithub
       - name: Build package Linux
         env:
-          PY_VERSION: ${{ matrix.python.name }}
-        run: docker run -v ${GITHUB_WORKSPACE}:/io -e PY_VERSION=${PY_VERSION} trk54ylmz/maturin-custom --interpreter /opt/python/${PY_VERSION}/bin/python
+          PY_VERSION: ${{ env.pythonLocation }}
+        run: maturin build --release --interpreter ${PY_VERSION}/bin/python
         if: runner.os == 'Linux'
       - name: Build package macOS
         env:

@@ -1,6 +1,6 @@
 [project]
 name = "rocksdb-py"
-version = "0.0.5a1"
+version = "0.0.5"
 readme = "readme.md"
 homepage = "https://github.com/trk54ylmz/rocksdb-py"
 repository = "https://github.com/trk54ylmz/rocksdb-py"
