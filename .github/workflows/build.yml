@@ -24,13 +24,13 @@ jobs:
         rust: [stable]
         platform: [
           {
-            os: "ubuntu-latest",
+            os: "ubuntu-20.04",
             python-architecture: "x64",
             rust-target: "x86_64-unknown-linux-gnu",
             name: "Linux x64"
           },
           {
-            os: "macOS-latest",
+            os: "macOS-11",
             python-architecture: "x64",
             rust-target: "x86_64-apple-darwin",
             name: "macOS x64"
@@ -42,13 +42,13 @@ jobs:
             name: "macOS arm64"
           },
           {
-            os: "windows-latest",
+            os: "windows-2019",
             python-architecture: "x86",
             rust-target: "i686-pc-windows-msvc",
             name: "Windows x86"
           },
           {
-            os: "windows-latest",
+            os: "windows-2019",
             python-architecture: "x64",
             rust-target: "x86_64-pc-windows-msvc",
             name: "Windows x64"
@@ -90,6 +90,11 @@ jobs:
       - name: Set LIBCLANG_PATH
         run: echo "LIBCLANG_PATH=$((gcm clang).source -replace "clang.exe")" >> ${GITHUB_ENV}
         if: runner.os == 'Windows'
+      - name: Set CLang for macOS x64
+        run: |
+          echo "MACOSX_DEPLOYMENT_TARGET=10.14" >> ${GITHUB_ENV}
+          echo "CXXFLAGS=-stdlib=libc++ CC=clang CXX=clang++" >> ${GITHUB_ENV}
+        if: matrix.platform.os == 'macOS-latest'
       - name: Install dependencies
         run: pip install maturin pygithub
       - name: Build package Linux
