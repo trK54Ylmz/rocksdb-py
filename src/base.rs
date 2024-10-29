@@ -3,6 +3,8 @@ use crate::option::*;
 use pyo3::create_exception;
 use pyo3::exceptions::PyException;
 use pyo3::prelude::*;
+use rocksdb::TransactionDB;
+use rocksdb::TransactionDBOptions;
 use rocksdb::{Options, DB};
 use std::sync::Arc;
 use std::time::Duration;
@@ -24,6 +26,7 @@ pub fn open_default(path: &str) -> PyResult<DBPy> {
             let db = DBPy {
                 db: Some(Arc::new(db)),
                 path: path.as_bytes().to_vec(),
+                transaction_db: None,
             };
 
             return Ok(db);
@@ -52,6 +55,7 @@ pub fn open(path: &str, opts: &OptionPy) -> PyResult<DBPy> {
             let db = DBPy {
                 db: Some(Arc::new(db)),
                 path: path.as_bytes().to_vec(),
+                transaction_db: None,
             };
 
             return Ok(db);
@@ -82,6 +86,7 @@ pub fn open_with_ttl(path: &str, ttl: u64, opts: &OptionPy) -> PyResult<DBPy> {
             let db = DBPy {
                 db: Some(Arc::new(db)),
                 path: path.as_bytes().to_vec(),
+                transaction_db: None,
             };
 
             return Ok(db);
@@ -130,12 +135,50 @@ pub fn open_for_readonly(
             let db = DBPy {
                 db: Some(Arc::new(db)),
                 path: path.as_bytes().to_vec(),
+                transaction_db: None,
             };
 
             return Ok(db);
         }
         Err(e) => Err(RocksDBPyException::new_err(format!(
             "Database cannot be open for read only, {}",
+            e
+        ))),
+    }
+}
+
+/// Opens the database for transactional operations.
+///
+/// # Example
+///
+/// ```
+/// opts = Option()
+///
+/// rocksdbpy.open_for_transaction('/tmp/test')
+///
+/// rocksdbpy.open_for_transaction('/tmp/test/1', opts)
+/// ```
+#[pyfunction]
+pub fn open_for_transaction(path: &str, option: Option<OptionPy>) -> PyResult<DBPy> {
+    let mut opts: Options = Options::default();
+    let transaction_opts: TransactionDBOptions = TransactionDBOptions::default();
+
+    if !option.is_none() {
+        opts = option.unwrap().inner;
+    }
+
+    match TransactionDB::open(&opts, &transaction_opts, path) {
+        Ok(db) => {
+            let db = DBPy {
+                transaction_db: Some(Arc::new(db)),
+                path: path.as_bytes().to_vec(),
+                db: None,
+            };
+
+            return Ok(db);
+        }
+        Err(e) => Err(RocksDBPyException::new_err(format!(
+            "Database cannot be open for transactional operations, {}",
             e
         ))),
     }
@@ -169,6 +212,7 @@ pub fn open_as_secondary(
             let db = DBPy {
                 db: Some(Arc::new(db)),
                 path: secondary.as_bytes().to_vec(),
+                transaction_db: None,
             };
 
             return Ok(db);

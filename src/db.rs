@@ -1,8 +1,10 @@
 use crate::base::*;
 use crate::batch::*;
 use crate::iterator::*;
+use crate::transaction::*;
 use pyo3::prelude::*;
 use pyo3::types::{PyBytes, PyList};
+use rocksdb::TransactionDB;
 use rocksdb::{Direction, IteratorMode, DB};
 use std::sync::Arc;
 
@@ -11,6 +13,7 @@ use std::sync::Arc;
 pub struct DBPy {
     pub path: Vec<u8>,
     pub db: Option<Arc<DB>>,
+    pub transaction_db: Option<Arc<TransactionDB>>,
 }
 
 #[pymethods]
@@ -210,6 +213,21 @@ impl DBPy {
             Ok(IteratorPy::new(db.as_ref(), im))
         } else {
             Err(RocksDBPyException::new_err("Iterator cannot get"))
+        }
+    }
+
+    /// Creates a transaction with default options.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// tx = db.transaction()
+    /// ``` 
+    fn transaction(&self) -> PyResult<TransactionPy> {
+        if let Some(db) =  &self.transaction_db {
+            Ok(TransactionPy::new(db.as_ref()))
+        } else {
+            Err(RocksDBPyException::new_err("Transaction could not started"))
         }
     }
 

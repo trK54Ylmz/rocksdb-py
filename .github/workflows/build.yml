@@ -5,6 +5,9 @@ on:
     tags:
       - "*"
 
+env:
+  PYO3_USE_ABI3_FORWARD_COMPATIBILITY: 1
+
 jobs:
   build:
     name: "Build on ${{ matrix.platform.name }} with Python ${{ matrix.python.version }}"
@@ -97,7 +100,7 @@ jobs:
           echo "MACOSX_DEPLOYMENT_TARGET=10.14" >> ${GITHUB_ENV}
         if: matrix.platform.name == 'macOS x64'
       - name: Install dependencies
-        run: pip install maturin pygithub
+        run: pip install setuptools maturin pygithub
       - name: Build package Linux
         env:
           PY_VERSION: ${{ env.pythonLocation }}

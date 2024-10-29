@@ -47,10 +47,20 @@ def open_for_readonly(path: str, option: Optional[Option], error: Optional[bool]
     :param bool or None error: Raise an error if write ahead log exists
     :return: active database
     :rtype: rocksdbpy.DB
-
     """
     ...
 
+
+def open_for_transaction(path: str, option: Optional[Option]) -> RocksDB:
+    """
+    Opens the database for transactional operations.
+
+    :param str path: The database path
+    :param rocksdbpy.Option or None option: The options
+    :return: active database
+    :rtype: rocksdbpy.DB
+    """
+    ...
 
 def open_as_secondary(primary: str, secondary: str, option: Optional[Option]) -> RocksDB:
     """
@@ -111,6 +121,15 @@ class RocksDB:
         :param rocksdbpy.WriteBatch batch: The batch writer
         """
         ...
+
+    def transaction(self) -> DBTransaction:
+        """
+        Creates a transaction with default options.
+
+        :return: The active transaction
+        :rtype: DBTransaction
+        """
+        ... 
 
     def multi_get(self, keys: List[bytes], skip_missing: Optional[bool]) -> List[bytes]:
         """
@@ -205,6 +224,7 @@ class DBIterator:
         :return: The database entry
         :rtype: (bytes, bytes)
         """
+        ...
 
     def len(self) -> int:
         """
@@ -213,11 +233,39 @@ class DBIterator:
         :return: The element count of the iterator
         :rtype: int
         """
+        ...
 
     def close(self) -> None:
         """
         Close and destroy active iterator
         """
+        ...
+
+
+class DBTransaction:
+    def add(self, key: bytes, value: bytes) -> None:
+        """
+        Put the key value in default column family and do conflict checking on the key.
+
+        :param bytes key: The entry key
+        :param bytes value: The entry value
+        """
+        ...
+
+    def merge(self, key: bytes, value: bytes) -> None:
+        """
+        Merge value with existing value of key, and also do conflict checking on the key.
+
+        :param bytes key: The entry key
+        :param bytes value: The entry value
+        """
+        ...
+
+    def commit(self) -> None:
+        """
+        Write all batched keys to the DB atomically.
+        """
+        ...
 
 
 class RocksDBException(Exception):

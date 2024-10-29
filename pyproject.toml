@@ -1,22 +1,14 @@
 [project]
 name = "rocksdb-py"
-version = "0.0.5"
+version = "0.0.6"
 readme = "readme.md"
-homepage = "https://github.com/trk54ylmz/rocksdb-py"
-repository = "https://github.com/trk54ylmz/rocksdb-py"
 description = "Python bindings for RocksDB"
 keywords = ["rocksdb", "rocksdb-py"]
-license = {text = "Apache-2.0"}
+license = {text = "MIT"}
 authors = [
     {name = "Tarik Yilmaz", email = "tarikyilmaz.54@gmail.com"}
 ]
-
-[build-system]
-requires = ["maturin>=1.3"]
-build-backend = "maturin"
-
-[package.metadata.maturin]
-classifier = [
+classifiers = [
     "Development Status :: 3 - Alpha",
     "Operating System :: MacOS",
     "Operating System :: Microsoft :: Windows",
@@ -28,3 +20,11 @@ classifier = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
 ]
+
+[project.urls]
+homepage = "https://github.com/trk54ylmz/rocksdb-py"
+repository = "https://github.com/trk54ylmz/rocksdb-py"
+
+[build-system]
+requires = ["maturin>=1.7.0"]
+build-backend = "maturin"
