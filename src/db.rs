@@ -259,6 +259,27 @@ impl DBPy {
         }
     }
 
+    /// Try to catch up with the primary by applying all the oplog entries.
+    /// This function is only useful for secondary instances.
+    ///
+    /// # Example
+    /// ```
+    /// db.try_catch_up_with_primary()
+    /// ```
+    fn try_catch_up_with_primary(&self) -> PyResult<()> {
+        if let Some(db) = &self.db {
+            match db.try_catch_up_with_primary() {
+                Ok(_) => Ok(()),
+                Err(e) => Err(RocksDBPyException::new_err(format!(
+                    "Database cannot catch up with primary. {}",
+                    e,
+                ))),
+            }
+        } else {
+            Err(RocksDBPyException::new_err("Database cannot catch up with primary"))
+        }
+    }
+
     /// Close active database
     ///
     /// # Example
