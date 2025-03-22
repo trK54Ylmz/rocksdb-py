@@ -140,13 +140,19 @@ class RocksDB:
         """
         ...
 
-    def flush(self):
+    def flush(self) -> None:
         """
         Flushes database memtables to SST files on the disk using default options.
         """
         ...
 
-    def close(self):
+    def try_catch_up_with_primary(self) -> None:
+        """
+        Tries to catch up with the primary database.
+        """
+        ...
+
+    def close(self) -> None:
         """
         Close active database
         """
