@@ -13,22 +13,8 @@ g = Github(token)
 
 r = g.get_user().get_repo(repository)
 
-ts = list(r.get_tags())
-
-if len(ts) == 0:
-    print('There is no any tag.')
-
-    sys.exit(1)
-
-t = ts[-1]
-
-rs = list(r.get_releases())
-s = list(filter(lambda r: r.tag_name == t.name, rs))
-
-if len(s) == 0:
-    rl = r.create_git_release(t.name, t.name, t.commit.commit.message)
-else:
-    rl = s[0]
+rs = sorted(list(r.get_releases()), key=lambda rls: rls.created_at, reverse=True)
+rl = rs[0]
 
 ss = list(map(lambda s: s.name, rl.get_assets()))
 

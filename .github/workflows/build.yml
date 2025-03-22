@@ -101,7 +101,7 @@ jobs:
           echo "MACOSX_DEPLOYMENT_TARGET=10.14" >> ${GITHUB_ENV}
         if: matrix.platform.name == 'macOS x64'
       - name: Install dependencies
-        run: pip install maturin pygithub
+        run: pip install maturin pygithub setuptools
       - name: Build package Linux
         env:
           PY_VERSION: ${{ env.pythonLocation }}
