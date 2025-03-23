@@ -75,7 +75,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ matrix.platform.python-architecture }}-cargo-${{ matrix.rust }}-
       - name: Install Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python.version }}
           architecture: ${{ matrix.platform.python-architecture }}
@@ -98,7 +98,7 @@ jobs:
         if: runner.os == 'Windows'
       - name: Set CLang for macOS x64
         run: |
-          echo "MACOSX_DEPLOYMENT_TARGET=10.14" >> ${GITHUB_ENV}
+          echo "MACOSX_DEPLOYMENT_TARGET=14" >> ${GITHUB_ENV}
         if: matrix.platform.name == 'macOS x64'
       - name: Install dependencies
         run: pip install maturin pygithub setuptools
