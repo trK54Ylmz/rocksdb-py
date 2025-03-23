@@ -74,8 +74,11 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.platform.python-architecture }}-cargo-${{ matrix.rust }}-${{ hashFiles('**/Cargo.toml') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.platform.python-architecture }}-cargo-${{ matrix.rust }}-
+      - name: Install gettext package
+        run: brew install gettext
+        if: ${{ (matrix.platform.name == 'macOS x64') && (matrix.python.name == 'cp39-cp39' || matrix.python.name == 'cp310-cp310') }}
       - name: Install Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python.version }}
           architecture: ${{ matrix.platform.python-architecture }}
