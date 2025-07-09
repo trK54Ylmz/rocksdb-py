@@ -4,6 +4,7 @@ use crate::iterator::*;
 use pyo3::prelude::*;
 use pyo3::types::{PyBytes, PyList};
 use rocksdb::{Direction, IteratorMode, DB};
+use rocksdb::backup::{BackupEngine, BackupEngineOptions};
 use std::sync::Arc;
 
 /// Base RocksDB database.
@@ -279,6 +280,45 @@ impl DBPy {
             Err(RocksDBPyException::new_err("Database cannot catch up with primary"))
         }
     }
+
+fn create_backup(&self, backup_path: &str) -> PyResult<()> {
+    if let Some(db) = &self.db {
+        let mut backup_opts = match BackupEngineOptions::new(backup_path) {
+            Ok(opts) => opts,
+            Err(e) => {
+                return Err(RocksDBPyException::new_err(format!(
+                    "Failed to create backup options: {}",
+                    e
+                )))
+            }
+        };
+
+        let env = rocksdb::Env::new().map_err(|e| {
+            RocksDBPyException::new_err(format!("Failed to create Env: {}", e))
+        })?;
+
+        let mut engine = match BackupEngine::open(&backup_opts, &env) {
+            Ok(engine) => engine,
+            Err(e) => {
+                return Err(RocksDBPyException::new_err(format!(
+                    "Failed to open backup engine: {}",
+                    e
+                )))
+            }
+        };
+
+        if let Err(e) = engine.create_new_backup_flush(db, true) {
+            return Err(RocksDBPyException::new_err(format!(
+                "Failed to create backup: {}",
+                e
+            )));
+        }
+
+        Ok(())
+    } else {
+        Err(RocksDBPyException::new_err("Database is not open"))
+    }
+}
 
     /// Close active database
     ///
