@@ -9,6 +9,7 @@ Python bindings for RocksDB written in Rust.
 * Batch write
 * Database iterator
 * Read options
+* Backup DB
 
 ### Install
 
