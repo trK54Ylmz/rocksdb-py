@@ -4,8 +4,9 @@ use crate::iterator::*;
 use pyo3::prelude::*;
 use pyo3::types::{PyBytes, PyList};
 use rocksdb::{Direction, IteratorMode, DB};
-use rocksdb::backup::{BackupEngine, BackupEngineOptions};
+use rocksdb::backup::{BackupEngine, BackupEngineOptions, RestoreOptions};
 use std::sync::Arc;
+use std::path::Path;
 
 /// Base RocksDB database.
 #[pyclass(name = "RocksDB")]
@@ -281,9 +282,69 @@ impl DBPy {
         }
     }
 
-fn create_backup(&self, backup_path: &str) -> PyResult<()> {
-    if let Some(db) = &self.db {
-        let mut backup_opts = match BackupEngineOptions::new(backup_path) {
+    /// Creates a consistent backup of the currently opened database at the given path.
+    ///
+    /// This method flushes memtables and stores a snapshot of the database in backup format,
+    /// which can later be restored using `RocksDB.restore_latest_backup(...)`.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// db.create_backup("/path/to/backup")
+    /// ```
+    fn create_backup(&self, backup_path: &str) -> PyResult<()> {
+        if let Some(db) = &self.db {
+            let mut backup_opts = match BackupEngineOptions::new(backup_path) {
+                Ok(opts) => opts,
+                Err(e) => {
+                    return Err(RocksDBPyException::new_err(format!(
+                        "Failed to create backup options: {}",
+                        e
+                    )))
+                }
+            };
+
+            let env = rocksdb::Env::new().map_err(|e| {
+                RocksDBPyException::new_err(format!("Failed to create Env: {}", e))
+            })?;
+
+            let mut engine = match BackupEngine::open(&backup_opts, &env) {
+                Ok(engine) => engine,
+                Err(e) => {
+                    return Err(RocksDBPyException::new_err(format!(
+                        "Failed to open backup engine: {}",
+                        e
+                    )))
+                }
+            };
+
+            if let Err(e) = engine.create_new_backup_flush(db, true) {
+                return Err(RocksDBPyException::new_err(format!(
+                    "Failed to create backup: {}",
+                    e
+                )));
+            }
+
+            Ok(())
+        } else {
+            Err(RocksDBPyException::new_err("Database is not open"))
+        }
+    }
+
+    /// Restores the latest backup from a given backup directory into a new RocksDB instance.
+    ///
+    /// This static method reads the backup metadata and reconstructs the database at the specified path.
+    /// It can be used before opening the database with `open_default(...)`.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// RocksDB.restore_latest_backup("/path/to/backup", "/path/to/restore")
+    /// db = RocksDB.open_default("/path/to/restore")
+    /// ```
+    #[staticmethod]
+    fn restore_latest_backup(backup_path: &str, restore_path: &str) -> PyResult<()> {
+        let backup_opts = match BackupEngineOptions::new(backup_path) {
             Ok(opts) => opts,
             Err(e) => {
                 return Err(RocksDBPyException::new_err(format!(
@@ -298,7 +359,7 @@ fn create_backup(&self, backup_path: &str) -> PyResult<()> {
         })?;
 
         let mut engine = match BackupEngine::open(&backup_opts, &env) {
-            Ok(engine) => engine,
+            Ok(e) => e,
             Err(e) => {
                 return Err(RocksDBPyException::new_err(format!(
                     "Failed to open backup engine: {}",
@@ -307,18 +368,18 @@ fn create_backup(&self, backup_path: &str) -> PyResult<()> {
             }
         };
 
-        if let Err(e) = engine.create_new_backup_flush(db, true) {
+        let restore_opts = RestoreOptions::default();
+        let path = Path::new(restore_path);
+
+        if let Err(e) = engine.restore_from_latest_backup(path, path, &restore_opts) {
             return Err(RocksDBPyException::new_err(format!(
-                "Failed to create backup: {}",
+                "Restore failed: {}",
                 e
             )));
         }
 
         Ok(())
-    } else {
-        Err(RocksDBPyException::new_err("Database is not open"))
     }
-}
 
     /// Close active database
     ///

@@ -152,6 +152,28 @@ class RocksDB:
         """
         ...
 
+    def create_backup(self, backup_path: str) -> None:
+        """
+        Creates a consistent backup of the currently opened database at the given path.
+
+        This method flushes memtables and saves a snapshot that can later be restored.
+
+        :param str backup_path: Path to the directory where the backup will be stored
+        """
+        ...
+
+    @staticmethod
+    def restore_latest_backup(backup_path: str, restore_path: str) -> None:
+        """
+        Restores the latest backup from a given backup directory into a new RocksDB instance.
+
+        This method must be called before opening the database from the restore path.
+
+        :param str backup_path: Path to the directory containing backup metadata and files
+        :param str restore_path: Path where the database will be restored
+        """
+        ...
+
     def close(self) -> None:
         """
         Close active database
