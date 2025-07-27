@@ -9,6 +9,7 @@ Python bindings for RocksDB written in Rust.
 * Batch write
 * Database iterator
 * Read options
+* Backup DB
 
 ### Install
 
@@ -143,6 +144,32 @@ opts.set_use_fsync(True)
 opts.set_bytes_per_sync(1024 * 1024)
 
 # and more
+```
+
+### Backup and Restore
+
+You can create a backup of your database
+
+```python
+import rocksdbpy
+from rocksdbpy import Option
+
+opts.create_if_missing(True)
+db = rocksdbpy.open('/tmp/rocksdb', opts)
+
+db.create_backup('/tmp/backup_rocksdb')
+```
+
+Please note, this is NOT A DATABASE! This is a backup, it will need to be restored.
+
+```python
+import rocksdbpy
+from rocksdbpy import RocksDB, Option
+
+RocksDB.restore_latest_backup('/tmp/backup_rocksdb', '/tmp/new_rocksdb')
+
+opts.create_if_missing(True)
+db_restore = rocksdbpy.open('/tmp/new_rocksdb', opts)
 ```
 
 ### Build
