@@ -146,25 +146,18 @@ opts.set_bytes_per_sync(1024 * 1024)
 # and more
 ```
 
-### Backup and Restore
+#### Backup and Restore
 
 You can create a backup of your database
 
 ```python
-import rocksdbpy
-from rocksdbpy import Option
-
-opts.create_if_missing(True)
-db = rocksdbpy.open('/tmp/rocksdb', opts)
-
 db.create_backup('/tmp/backup_rocksdb')
 ```
 
 Please note, this is NOT A DATABASE! This is a backup, it will need to be restored.
 
 ```python
-import rocksdbpy
-from rocksdbpy import RocksDB, Option
+from rocksdbpy import RocksDB
 
 RocksDB.restore_latest_backup('/tmp/backup_rocksdb', '/tmp/new_rocksdb')
 

@@ -30,11 +30,10 @@ for d in dest.iterdir():
 
         print(res.stdout.decode('utf-8'))
         print(res.stderr.decode('utf-8'))
+        sys.exit(0)
     except subprocess.CalledProcessError as e:
         print(e.output)
         print(e.stderr)
         print(e.stdout)
-
-    sys.exit(0)
 
 sys.exit(1)
