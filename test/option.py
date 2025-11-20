@@ -107,3 +107,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.optimize_level_style_compaction(0x40000))
         self.assertRaises(TypeError, o.optimize_level_style_compaction, 1.024)
+
+    def test_optimize_universal_style_compaction(self):
+        o = Option()
+
+        self.assertIsNone(o.optimize_universal_style_compaction(0x40000))
+        self.assertRaises(TypeError, o.optimize_universal_style_compaction, 1.024)
