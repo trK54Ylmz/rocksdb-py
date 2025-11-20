@@ -113,3 +113,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.optimize_universal_style_compaction(0x40000))
         self.assertRaises(TypeError, o.optimize_universal_style_compaction, 1.024)
+
+    def test_create_missing_column_families(self):
+        o = Option()
+
+        self.assertIsNone(o.create_missing_column_families(True))
+        self.assertRaises(TypeError, o.create_missing_column_families, None)

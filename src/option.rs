@@ -337,4 +337,16 @@ impl OptionPy {
     pub fn optimize_universal_style_compaction(&mut self, memtable_memory_budget: usize) {
         self.inner.optimize_universal_style_compaction(memtable_memory_budget)
     }
+
+    /// If true, any column families that didn't exist when opening the database will be created.
+    ///
+    /// Default: `false`
+    ///
+    /// Examples
+    /// ```
+    /// opts.create_missing_column_families(true)
+    /// ```
+    pub fn create_missing_column_families(&mut self, create_missing_cfs: bool) {
+        self.inner.create_missing_column_families(create_missing_cfs)
+    }
 }
