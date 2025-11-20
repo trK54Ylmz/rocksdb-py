@@ -380,4 +380,19 @@ impl OptionPy {
     pub fn set_paranoid_checks(&mut self, enabled: bool) {
         self.inner.set_paranoid_checks(enabled)
     }
+
+    /// Number of threads for parallel compression. Parallel compression is enabled
+    /// only if threads > 1. **THE FEATURE IS STILL EXPERIMENTAL**
+    /// 
+    /// See [code](https://github.com/facebook/rocksdb/blob/v8.6.7/include/rocksdb/advanced_options.h#L116-L127) for more information.
+    ///
+    /// Default: `1`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_compression_options_parallel_threads(3)
+    /// ```
+    pub fn set_compression_options_parallel_threads(&mut self, num: i32) {
+        self.inner.set_compression_options_parallel_threads(num)
+    }
 }

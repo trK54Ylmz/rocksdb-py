@@ -131,3 +131,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_paranoid_checks(True))
         self.assertRaises(TypeError, o.set_paranoid_checks, None)
+
+    def test_set_compression_options_parallel_threads(self):
+        o = Option()
+
+        self.assertIsNone(o.set_compression_options_parallel_threads(3))
+        self.assertRaises(TypeError, o.set_compression_options_parallel_threads, None)
