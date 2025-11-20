@@ -417,4 +417,18 @@ impl OptionPy {
     pub fn set_compression_options(&mut self, w_bits: i32, level: i32, strategy: i32, max_dict_bytes: i32) {
         self.inner.set_compression_options(w_bits, level, strategy, max_dict_bytes)
     }
+
+    /// Sets compression options for blocks at the bottom-most level. Meaning of all settings is
+    /// the same as in `set_compression_options` method but affect only the bottom-most compression
+    /// which is set using `set_bottommost_compression_type` method.
+    ///
+    /// Default: `N/A`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_bottommost_compression_options(4, 5, 6, 7, true)
+    /// ```
+    pub fn set_bottommost_compression_options(&mut self, w_bits: i32, level: i32, strategy: i32, max_dict_bytes: i32, enabled: bool) {
+        self.inner.set_bottommost_compression_options(w_bits, level, strategy, max_dict_bytes, enabled)
+    }
 }

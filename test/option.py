@@ -143,3 +143,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_compression_options(4, 5, 6, 7))
         self.assertRaises(TypeError, o.set_compression_options, None, None, None, None)
+
+    def test_set_bottommost_compression_options(self):
+        o = Option()
+
+        self.assertIsNone(o.set_bottommost_compression_options(4, 5, 6, 7, True))
+        self.assertRaises(TypeError, o.set_bottommost_compression_options, None, None, None, None, None)
