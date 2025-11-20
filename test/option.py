@@ -94,3 +94,10 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_level_zero_slowdown_writes_trigger(10))
         self.assertRaises(TypeError, o.set_level_zero_slowdown_writes_trigger, None)
+
+    def test_increase_parallelism(self):
+        o = Option()
+
+        self.assertIsNone(o.increase_parallelism(2))
+        self.assertRaises(TypeError, o.increase_parallelism, 1.1)
+        self.assertRaises(TypeError, o.increase_parallelism, None)
