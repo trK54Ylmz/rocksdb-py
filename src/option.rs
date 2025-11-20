@@ -361,4 +361,23 @@ impl OptionPy {
     pub fn set_error_if_exists(&mut self, enabled: bool) {
         self.inner.set_error_if_exists(enabled)
     }
+
+    /// Enable/disable paranoid checks.
+    ///
+    /// If true, the implementation will do aggressive checking of the data it is processing and
+    /// will stop early if it detects any errors. This may have unforeseen ramifications: for
+    /// example, a corruption of one DB entry may cause a large number of entries to become
+    /// unreadable or for the entire DB to become unopenable. If any of the writes to the database
+    /// fails (Put, Delete, Merge, Write), the database will switch to read-only mode and fail all
+    /// other Write operations.
+    ///
+    /// Default: `false`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_paranoid_checks(true)
+    /// ```
+    pub fn set_paranoid_checks(&mut self, enabled: bool) {
+        self.inner.set_paranoid_checks(enabled)
+    }
 }

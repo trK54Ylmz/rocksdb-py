@@ -125,3 +125,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_error_if_exists(True))
         self.assertRaises(TypeError, o.set_error_if_exists, None)
+
+    def test_set_paranoid_checks(self):
+        o = Option()
+
+        self.assertIsNone(o.set_paranoid_checks(True))
+        self.assertRaises(TypeError, o.set_paranoid_checks, None)
