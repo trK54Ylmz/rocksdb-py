@@ -101,3 +101,9 @@ class TestOption(unittest.TestCase):
         self.assertIsNone(o.increase_parallelism(2))
         self.assertRaises(TypeError, o.increase_parallelism, 1.1)
         self.assertRaises(TypeError, o.increase_parallelism, None)
+
+    def test_optimize_level_style_compaction(self):
+        o = Option()
+
+        self.assertIsNone(o.optimize_level_style_compaction(0x40000))
+        self.assertRaises(TypeError, o.optimize_level_style_compaction, 1.024)
