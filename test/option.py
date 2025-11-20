@@ -137,3 +137,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_compression_options_parallel_threads(3))
         self.assertRaises(TypeError, o.set_compression_options_parallel_threads, None)
+
+    def test_set_compression_options(self):
+        o = Option()
+
+        self.assertIsNone(o.set_compression_options(4, 5, 6, 7))
+        self.assertRaises(TypeError, o.set_compression_options, None, None, None, None)

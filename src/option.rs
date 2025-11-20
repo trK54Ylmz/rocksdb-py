@@ -395,4 +395,26 @@ impl OptionPy {
     pub fn set_compression_options_parallel_threads(&mut self, num: i32) {
         self.inner.set_compression_options_parallel_threads(num)
     }
+
+    /// Maximum size of dictionaries used to prime the compression library. Enabling dictionary can
+    /// improve compression ratios when there are repetitions across data blocks.
+    ///
+    /// The dictionary is created by sampling the SST file data. If `zstd_max_train_bytes` is
+    /// nonzero, the samples are passed through zstd's dictionary generator. Otherwise, the random
+    /// samples are used directly as the dictionary.
+    ///
+    /// When compression dictionary is disabled, we compress and write each block before buffering
+    /// data for the next one. When compression dictionary is enabled, we buffer all SST file data
+    /// in-memory so we can sample it, as data can only be compressed and written after the
+    /// dictionary has been finalized. So users of this feature may see increased memory usage.
+    ///
+    /// Default: `0`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_compression_options(4, 5, 6, 7)
+    /// ```
+    pub fn set_compression_options(&mut self, w_bits: i32, level: i32, strategy: i32, max_dict_bytes: i32) {
+        self.inner.set_compression_options(w_bits, level, strategy, max_dict_bytes)
+    }
 }
