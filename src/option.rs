@@ -349,4 +349,16 @@ impl OptionPy {
     pub fn create_missing_column_families(&mut self, create_missing_cfs: bool) {
         self.inner.create_missing_column_families(create_missing_cfs)
     }
+
+    /// Specifies whether an error should be raised if the database already exists.
+    ///
+    /// Default: `false`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_error_if_exists(true)
+    /// ```
+    pub fn set_error_if_exists(&mut self, enabled: bool) {
+        self.inner.set_error_if_exists(enabled)
+    }
 }

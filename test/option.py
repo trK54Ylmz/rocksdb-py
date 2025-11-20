@@ -119,3 +119,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.create_missing_column_families(True))
         self.assertRaises(TypeError, o.create_missing_column_families, None)
+
+    def test_set_error_if_exists(self):
+        o = Option()
+
+        self.assertIsNone(o.set_error_if_exists(True))
+        self.assertRaises(TypeError, o.set_error_if_exists, None)
