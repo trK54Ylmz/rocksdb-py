@@ -275,4 +275,19 @@ impl OptionPy {
     pub fn set_allow_mmap_reads(&mut self, is_enabled: bool) {
         self.inner.set_allow_mmap_reads(is_enabled)
     }
+
+    /// By default, RocksDB uses only one background thread for flush and compaction. Calling this
+    /// function will set it up such that total of total_threads is used. Good value for total_threads
+    /// is the number of cores. You almost definitely want to call this function if your system is
+    /// bottlenecked by RocksDB.
+    ///
+    /// Default: `1`
+    ///
+    /// Examples
+    /// ```
+    /// opts.increase_parallelism(3)
+    /// ```
+    pub fn increase_parallelism(&mut self, parallelism: i32) {
+        self.inner.increase_parallelism(parallelism)
+    }
 }
