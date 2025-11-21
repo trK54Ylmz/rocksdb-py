@@ -155,3 +155,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_zstd_max_train_bytes(64 * 1024 * 1024))
         self.assertRaises(TypeError, o.set_zstd_max_train_bytes, None)
+
+    def test_set_bottommost_zstd_max_train_bytes(self):
+        o = Option()
+
+        self.assertIsNone(o.set_bottommost_zstd_max_train_bytes(64 * 1024 * 1024, True))
+        self.assertRaises(TypeError, o.set_bottommost_zstd_max_train_bytes, None, None)

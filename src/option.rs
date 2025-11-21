@@ -447,4 +447,20 @@ impl OptionPy {
     pub fn set_zstd_max_train_bytes(&mut self, value: i32) {
         self.inner.set_zstd_max_train_bytes(value)
     }
+
+    /// Sets maximum size of training data passed to zstd's dictionary trainer when compressing the
+    /// bottom-most level. Using zstd's dictionary trainer can achieve even better compression
+    /// ratio improvements than using `max_dict_bytes` alone.
+    /// 
+    /// The training data will be used to generate a dictionary of `max_dict_bytes`.
+    ///
+    /// Default: `0`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_zstd_max_train_bytes(64 * 1024 * 1024, true)
+    /// ```
+    pub fn set_bottommost_zstd_max_train_bytes(&mut self, value: i32, enabled: bool) {
+        self.inner.set_bottommost_zstd_max_train_bytes(value, enabled)
+    }
 }
