@@ -227,3 +227,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_max_sequential_skip_in_iterations(16))
         self.assertRaises(TypeError, o.set_max_sequential_skip_in_iterations, None)
+
+    def test_set_use_direct_reads(self):
+        o = Option()
+
+        self.assertIsNone(o.set_use_direct_reads(True))
+        self.assertRaises(TypeError, o.set_use_direct_reads, None)

@@ -626,4 +626,21 @@ impl OptionPy {
     pub fn set_max_sequential_skip_in_iterations(&mut self, num: u64) {
         self.inner.set_max_sequential_skip_in_iterations(num)
     }
+
+    /// Enable direct I/O mode for reading they may or may not improve performance depending on
+    /// the use case
+    /// 
+    /// Files will be opened in "direct I/O" mode which means that data read from the disk will not
+    /// be cached or buffered. The hardware buffer of the devices may however still be used.
+    /// Memory mapped files are not impacted by these parameters.
+    /// 
+    /// Default: `false`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_use_direct_reads(true)
+    /// ```
+    pub fn set_use_direct_reads(&mut self, enabled: bool) {
+        self.inner.set_use_direct_reads(enabled)
+    }
 }
