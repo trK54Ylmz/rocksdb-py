@@ -191,3 +191,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.prepare_for_bulk_load())
         self.assertRaises(TypeError, o.prepare_for_bulk_load, None)
+
+    def test_set_max_file_opening_threads(self):
+        o = Option()
+
+        self.assertIsNone(o.set_max_file_opening_threads(32))
+        self.assertRaises(TypeError, o.set_max_file_opening_threads, None)

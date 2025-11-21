@@ -534,4 +534,17 @@ impl OptionPy {
     pub fn prepare_for_bulk_load(&mut self) {
         self.inner.prepare_for_bulk_load()
     }
+
+    /// If `max_open_files` is -1, DB will open all files on `DB::Open()`. You can use this option
+    /// to increase the number of threads used to open the files.
+    ///
+    /// Default: `16`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_max_file_opening_threads(32)
+    /// ```
+    pub fn set_max_file_opening_threads(&mut self, nthreads: i32) {
+        self.inner.set_max_file_opening_threads(nthreads)
+    }
 }
