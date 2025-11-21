@@ -595,4 +595,19 @@ impl OptionPy {
     pub fn set_allow_concurrent_memtable_write(&mut self, allow: bool) {
         self.inner.set_allow_concurrent_memtable_write(allow)
     }
+
+    /// If true, threads synchronizing with the write batch group leader will wait for up to
+    /// `write_thread_max_yield_usec` before blocking on a mutex. This can substantially improve
+    /// throughput for concurrent workloads, regardless
+    /// of whether `allow_concurrent_memtable_write` is enabled.
+    /// 
+    /// Default: `true`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_enable_write_thread_adaptive_yield(false)
+    /// ```
+    pub fn set_enable_write_thread_adaptive_yield(&mut self, enabled: bool) {
+        self.inner.set_enable_write_thread_adaptive_yield(enabled)
+    }
 }
