@@ -491,4 +491,16 @@ impl OptionPy {
     pub fn set_level_compaction_dynamic_level_bytes(&mut self, enabled: bool) {
         self.inner.set_level_compaction_dynamic_level_bytes(enabled)
     }
+
+    /// Sets the `optimize_filters_for_hits` flag
+    ///
+    /// Default: `false`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_optimize_filters_for_hits(true)
+    /// ```
+    pub fn set_optimize_filters_for_hits(&mut self, optimize_for_hits: bool) {
+        self.inner.set_optimize_filters_for_hits(optimize_for_hits)
+    }
 }

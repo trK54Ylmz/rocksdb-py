@@ -173,3 +173,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_level_compaction_dynamic_level_bytes(True))
         self.assertRaises(TypeError, o.set_level_compaction_dynamic_level_bytes, None)
+
+    def test_set_optimize_filters_for_hits(self):
+        o = Option()
+
+        self.assertIsNone(o.set_optimize_filters_for_hits(True))
+        self.assertRaises(TypeError, o.set_optimize_filters_for_hits, None)
