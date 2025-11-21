@@ -167,3 +167,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_compaction_readahead_size(16 * 1024 * 1024))
         self.assertRaises(TypeError, o.set_compaction_readahead_size, None)
+
+    def test_set_level_compaction_dynamic_level_bytes(self):
+        o = Option()
+
+        self.assertIsNone(o.set_level_compaction_dynamic_level_bytes(True))
+        self.assertRaises(TypeError, o.set_level_compaction_dynamic_level_bytes, None)

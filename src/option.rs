@@ -477,4 +477,18 @@ impl OptionPy {
     pub fn set_compaction_readahead_size(&mut self, compaction_readahead_size: usize) {
         self.inner.set_compaction_readahead_size(compaction_readahead_size)
     }
+
+    /// Allow RocksDB to pick dynamic base of bytes for levels. With this feature turned on,
+    /// RocksDB will automatically adjust max bytes for each level. The goal of this feature is to
+    /// have lower bound on size amplification.
+    ///
+    /// Default: `false`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_level_compaction_dynamic_level_bytes(true)
+    /// ```
+    pub fn set_level_compaction_dynamic_level_bytes(&mut self, enabled: bool) {
+        self.inner.set_level_compaction_dynamic_level_bytes(enabled)
+    }
 }
