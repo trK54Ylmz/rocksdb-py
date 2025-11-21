@@ -221,3 +221,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_enable_write_thread_adaptive_yield(False))
         self.assertRaises(TypeError, o.set_enable_write_thread_adaptive_yield, None)
+
+    def test_set_max_sequential_skip_in_iterations(self):
+        o = Option()
+
+        self.assertIsNone(o.set_max_sequential_skip_in_iterations(16))
+        self.assertRaises(TypeError, o.set_max_sequential_skip_in_iterations, None)

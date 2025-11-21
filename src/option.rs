@@ -610,4 +610,20 @@ impl OptionPy {
     pub fn set_enable_write_thread_adaptive_yield(&mut self, enabled: bool) {
         self.inner.set_enable_write_thread_adaptive_yield(enabled)
     }
+
+    /// Specifies whether an `iteration->Next()` sequentially skips over keys with the same
+    /// user-key or not.
+    /// 
+    /// This number specifies the number of keys (with the same userkey) that will be sequentially
+    /// skipped before a reseek is issued.
+    /// 
+    /// Default: `8`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_max_sequential_skip_in_iterations(16)
+    /// ```
+    pub fn set_max_sequential_skip_in_iterations(&mut self, num: u64) {
+        self.inner.set_max_sequential_skip_in_iterations(num)
+    }
 }
