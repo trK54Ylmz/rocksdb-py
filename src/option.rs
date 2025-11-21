@@ -672,4 +672,19 @@ impl OptionPy {
     pub fn set_is_fd_close_on_exec(&mut self, enabled: bool) {
         self.inner.set_is_fd_close_on_exec(enabled)
     }
+
+    /// By default `target_file_size_multiplier` is 1, which means by default files in different
+    /// levels will have similar size.
+    /// 
+    /// Dynamically changeable through `SetOptions()` API
+    /// 
+    /// Default: `1`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_target_file_size_multiplier(2)
+    /// ```
+    pub fn set_target_file_size_multiplier(&mut self, multiplier: i32) {
+        self.inner.set_target_file_size_multiplier(multiplier)
+    }
 }

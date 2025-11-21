@@ -245,3 +245,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_is_fd_close_on_exec(False))
         self.assertRaises(TypeError, o.set_is_fd_close_on_exec, None)
+
+    def test_set_target_file_size_multiplier(self):
+        o = Option()
+
+        self.assertIsNone(o.set_target_file_size_multiplier(2))
+        self.assertRaises(TypeError, o.set_target_file_size_multiplier, None)
