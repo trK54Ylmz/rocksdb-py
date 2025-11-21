@@ -518,4 +518,20 @@ impl OptionPy {
     pub fn set_delete_obsolete_files_period_micros(&mut self, micros: u64) {
         self.inner.set_delete_obsolete_files_period_micros(micros)
     }
+
+    /// Prepare the DB for bulk loading.
+    /// 
+    /// All data will be in level 0 without any automatic compaction. It's recommended to manually
+    /// call `CompactRange(NULL, NULL)` before reading from the database, because otherwise the
+    /// read can be very slow.
+    ///
+    /// Default: `N/A`
+    ///
+    /// Examples
+    /// ```
+    /// opts.prepare_for_bulk_load()
+    /// ```
+    pub fn prepare_for_bulk_load(&mut self) {
+        self.inner.prepare_for_bulk_load()
+    }
 }

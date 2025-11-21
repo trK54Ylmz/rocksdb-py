@@ -185,3 +185,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_delete_obsolete_files_period_micros(300_000_000))
         self.assertRaises(TypeError, o.set_delete_obsolete_files_period_micros, None)
+
+    def test_prepare_for_bulk_load(self):
+        o = Option()
+
+        self.assertIsNone(o.prepare_for_bulk_load())
+        self.assertRaises(TypeError, o.prepare_for_bulk_load, None)
