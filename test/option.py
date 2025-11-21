@@ -203,3 +203,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_wal_bytes_per_sync(1 * 1024 * 1024))
         self.assertRaises(TypeError, o.set_wal_bytes_per_sync, None)
+
+    def test_set_writable_file_max_buffer_size(self):
+        o = Option()
+
+        self.assertIsNone(o.set_writable_file_max_buffer_size(4096 * 1024))
+        self.assertRaises(TypeError, o.set_writable_file_max_buffer_size, None)

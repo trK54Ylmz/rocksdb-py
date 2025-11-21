@@ -561,4 +561,22 @@ impl OptionPy {
     pub fn set_wal_bytes_per_sync(&mut self, nbytes: u64) {
         self.inner.set_wal_bytes_per_sync(nbytes)
     }
+
+    /// Sets the maximum buffer size that is used by `WritableFileWriter`.
+    /// 
+    /// On Windows, we need to maintain an aligned buffer for writes. We allow the buffer to grow
+    /// until it's size hits the limit in buffered IO and fix the buffer size when using direct IO
+    /// to ensure alignment of write requests if the logical sector size is unusual
+    ///
+    /// Dynamically changeable through `SetDBOptions()` API.
+    /// 
+    /// Default: `1024 * 1024 (1 MB)`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_writable_file_max_buffer_size(4096 * 1024)
+    /// ```
+    pub fn set_writable_file_max_buffer_size(&mut self, nbytes: u64) {
+        self.inner.set_writable_file_max_buffer_size(nbytes)
+    }
 }
