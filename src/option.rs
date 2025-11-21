@@ -660,4 +660,16 @@ impl OptionPy {
     pub fn set_use_direct_io_for_flush_and_compaction(&mut self, enabled: bool) {
         self.inner.set_use_direct_io_for_flush_and_compaction(enabled)
     }
+
+    /// Enable/disable child process inherit open files.
+    /// 
+    /// Default: `true`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_is_fd_close_on_exec(false)
+    /// ```
+    pub fn set_is_fd_close_on_exec(&mut self, enabled: bool) {
+        self.inner.set_is_fd_close_on_exec(enabled)
+    }
 }
