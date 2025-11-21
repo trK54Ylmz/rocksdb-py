@@ -463,4 +463,18 @@ impl OptionPy {
     pub fn set_bottommost_zstd_max_train_bytes(&mut self, value: i32, enabled: bool) {
         self.inner.set_bottommost_zstd_max_train_bytes(value, enabled)
     }
+
+    /// If non-zero, we perform bigger reads when doing compaction. If you're running RocksDB on
+    /// spinning disks, you should set this to at least 2MB. That way RocksDB's compaction is doing
+    /// sequential instead of random reads.
+    ///
+    /// Default: `2 * 1024 * 1024 (2MB)`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_compaction_readahead_size(16 * 1024 * 1024)
+    /// ```
+    pub fn set_compaction_readahead_size(&mut self, compaction_readahead_size: usize) {
+        self.inner.set_compaction_readahead_size(compaction_readahead_size)
+    }
 }
