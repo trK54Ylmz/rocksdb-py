@@ -503,4 +503,19 @@ impl OptionPy {
     pub fn set_optimize_filters_for_hits(&mut self, optimize_for_hits: bool) {
         self.inner.set_optimize_filters_for_hits(optimize_for_hits)
     }
+
+    /// Sets the periodicity when obsolete files get deleted.
+    /// 
+    /// The files that get out of scope by compaction process will still get automatically delete
+    /// on every compaction, regardless of this setting.
+    ///
+    /// Default: `6 hours`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_delete_obsolete_files_period_micros(300_000_000)
+    /// ```
+    pub fn set_delete_obsolete_files_period_micros(&mut self, micros: u64) {
+        self.inner.set_delete_obsolete_files_period_micros(micros)
+    }
 }

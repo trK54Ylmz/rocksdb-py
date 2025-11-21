@@ -179,3 +179,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_optimize_filters_for_hits(True))
         self.assertRaises(TypeError, o.set_optimize_filters_for_hits, None)
+
+    def test_set_delete_obsolete_files_period_micros(self):
+        o = Option()
+
+        self.assertIsNone(o.set_delete_obsolete_files_period_micros(300_000_000))
+        self.assertRaises(TypeError, o.set_delete_obsolete_files_period_micros, None)
