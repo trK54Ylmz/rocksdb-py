@@ -579,4 +579,20 @@ impl OptionPy {
     pub fn set_writable_file_max_buffer_size(&mut self, nbytes: u64) {
         self.inner.set_writable_file_max_buffer_size(nbytes)
     }
+
+    /// If true, allow multi-writers to update mem tables in parallel.
+    /// Only some memtable_factory-s support concurrent writes; currently it is implemented only
+    /// for SkipListFactory. Concurrent memtable writes are not compatible with
+    /// inplace_update_support or filter_deletes. It is strongly recommended
+    /// to set `enable_write_thread_adaptive_yield` if you are going to use this feature.
+    /// 
+    /// Default: `true`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_allow_concurrent_memtable_write(false)
+    /// ```
+    pub fn set_allow_concurrent_memtable_write(&mut self, allow: bool) {
+        self.inner.set_allow_concurrent_memtable_write(allow)
+    }
 }

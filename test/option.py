@@ -209,3 +209,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_writable_file_max_buffer_size(4096 * 1024))
         self.assertRaises(TypeError, o.set_writable_file_max_buffer_size, None)
+
+    def test_set_allow_concurrent_memtable_write(self):
+        o = Option()
+
+        self.assertIsNone(o.set_allow_concurrent_memtable_write(False))
+        self.assertRaises(TypeError, o.set_allow_concurrent_memtable_write, None)
