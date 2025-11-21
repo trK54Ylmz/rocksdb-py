@@ -547,4 +547,18 @@ impl OptionPy {
     pub fn set_max_file_opening_threads(&mut self, nthreads: i32) {
         self.inner.set_max_file_opening_threads(nthreads)
     }
+
+    /// Same as bytes_per_sync, but applies to WAL files.
+    ///
+    /// Dynamically changeable through `SetDBOptions()` API.
+    /// 
+    /// Default: `0, turned off`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_wal_bytes_per_sync(1 * 1024 * 1024)
+    /// ```
+    pub fn set_wal_bytes_per_sync(&mut self, nbytes: u64) {
+        self.inner.set_wal_bytes_per_sync(nbytes)
+    }
 }

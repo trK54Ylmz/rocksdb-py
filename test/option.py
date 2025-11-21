@@ -197,3 +197,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_max_file_opening_threads(32))
         self.assertRaises(TypeError, o.set_max_file_opening_threads, None)
+
+    def test_set_wal_bytes_per_sync(self):
+        o = Option()
+
+        self.assertIsNone(o.set_wal_bytes_per_sync(1 * 1024 * 1024))
+        self.assertRaises(TypeError, o.set_wal_bytes_per_sync, None)
