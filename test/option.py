@@ -233,3 +233,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_use_direct_reads(True))
         self.assertRaises(TypeError, o.set_use_direct_reads, None)
+
+    def test_set_use_direct_io_for_flush_and_compaction(self):
+        o = Option()
+
+        self.assertIsNone(o.set_use_direct_io_for_flush_and_compaction(True))
+        self.assertRaises(TypeError, o.set_use_direct_io_for_flush_and_compaction, None)
