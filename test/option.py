@@ -287,3 +287,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_memtable_huge_page_size(20))
         self.assertRaises(TypeError, o.set_memtable_huge_page_size, None)
+
+    def test_set_max_successive_merges(self):
+        o = Option()
+
+        self.assertIsNone(o.set_max_successive_merges(8))
+        self.assertRaises(TypeError, o.set_max_successive_merges, None)

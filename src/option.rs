@@ -782,4 +782,21 @@ impl OptionPy {
     pub fn set_memtable_huge_page_size(&mut self, size: usize) {
         self.inner.set_memtable_huge_page_size(size)
     }
+
+    /// Sets the maximum number of successive merge operations on a key in the memtable.
+    /// 
+    /// When a merge operation is added to the memtable and the maximum number of successive merges
+    /// is reached, the value of the key will be calculated and inserted into the memtable instead
+    /// of the merge operation. This will ensure that there are never
+    /// more than `max_successive_merges` merge operations in the memtable.
+    /// 
+    /// Default: `0 (disabled)`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_max_successive_merges(8)
+    /// ```
+    pub fn set_max_successive_merges(&mut self, num: usize) {
+        self.inner.set_max_successive_merges(num)
+    }
 }
