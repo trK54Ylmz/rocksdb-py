@@ -305,3 +305,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_inplace_update_locks(25_000))
         self.assertRaises(TypeError, o.set_inplace_update_locks, None)
+
+    def test_set_max_write_buffer_size_to_maintain(self):
+        o = Option()
+
+        self.assertIsNone(o.set_max_write_buffer_size_to_maintain(20_000))
+        self.assertRaises(TypeError, o.set_max_write_buffer_size_to_maintain, None)

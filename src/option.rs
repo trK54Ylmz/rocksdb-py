@@ -828,4 +828,36 @@ impl OptionPy {
     pub fn set_inplace_update_locks(&mut self, num: usize) {
         self.inner.set_inplace_update_locks(num)
     }
+
+    /// The total maximum size(bytes) of write buffers to maintain in memory including copies of
+    /// buffers that have already been flushed. This parameter only affects trimming of flushed
+    /// buffers and does not affect flushing. This controls the maximum amount of write history
+    /// that will be available in memory for conflict checking when Transactions are used. The
+    /// actual size of write history (flushed Memtables) might be higher than this limit if
+    /// further trimming will reduce write history total size below this limit.
+    /// For example, if `max_write_buffer_size_to_maintain` is set to 64MB, and there are three
+    /// flushed Memtables, with sizes of 32MB, 20MB, 20MB. Because trimming the next Memtable of
+    /// size 20MB will reduce total memory usage to 52MB which is below the limit, RocksDB
+    /// will stop trimming.
+    /// 
+    /// When using an OptimisticTransactionDB: If this value is too low, some transactions may fail
+    /// at commit time due to not being able to determine whether there were any write conflicts.
+    /// 
+    /// When using a TransactionDB: If `Transaction::SetSnapshot` is used, TransactionDB will read
+    /// either in-memory write buffers or SST files to do write-conflict checking. Increasing this
+    /// value can reduce the number of reads to SST files done for conflict detection.
+    /// 
+    /// Setting this value to 0 will cause write buffers to be freed immediately after
+    /// they are flushed. If this value is set to -1, `max_write_buffer_number * write_buffer_size`
+    /// will be used.
+    /// 
+    /// Default: `If using a TransactionDB/OptimisticTransactionDB, the default value will be set to the value of 'max_write_buffer_number * write_buffer_size' if it is not explicitly set by the user. Otherwise, the default is 0.`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_max_write_buffer_size_to_maintain(20_000)
+    /// ```
+    pub fn set_max_write_buffer_size_to_maintain(&mut self, size: i64) {
+        self.inner.set_max_write_buffer_size_to_maintain(size)
+    }
 }
