@@ -293,3 +293,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_max_successive_merges(8))
         self.assertRaises(TypeError, o.set_max_successive_merges, None)
+
+    def test_set_inplace_update_support(self):
+        o = Option()
+
+        self.assertIsNone(o.set_inplace_update_support(True))
+        self.assertRaises(TypeError, o.set_inplace_update_support, None)

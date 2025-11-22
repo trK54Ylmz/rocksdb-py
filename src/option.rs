@@ -799,4 +799,21 @@ impl OptionPy {
     pub fn set_max_successive_merges(&mut self, num: usize) {
         self.inner.set_max_successive_merges(num)
     }
+
+    /// Enable/disable thread-safe inplace updates.
+    /// 
+    /// Requires updates if
+    /// - key exists in current memtable
+    /// - new `sizeof(new_value)` <= `sizeof(old_value)`
+    /// - `old_value` for that key is a put i.e. `kTypeValue`
+    /// 
+    /// Default: `false`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_inplace_update_support(true)
+    /// ```
+    pub fn set_inplace_update_support(&mut self, enabled: bool) {
+        self.inner.set_inplace_update_support(enabled)
+    }
 }
