@@ -719,4 +719,21 @@ impl OptionPy {
     pub fn set_db_write_buffer_size(&mut self, size: usize) {
         self.inner.set_db_write_buffer_size(size)
     }
+
+    /// Control maximum total data size for a level. `max_bytes_for_level_base` is the max total
+    /// for level-1. Maximum number of bytes for level L can be calculated as
+    /// (`max_bytes_for_level_base`) * (`max_bytes_for_level_multiplier` ^ (L-1))
+    /// For example, if `max_bytes_for_level_base` is 200MB,
+    /// and if `max_bytes_for_level_multiplier` is 10, total data size for level-1 will be 200MB,
+    /// total file size for level-2 will be 2GB, and total file size for level-3 will be 20GB.
+    /// 
+    /// Default: `0x10000000 (256MiB).`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_write_buffer_size(512 * 1024 * 1024)
+    /// ```
+    pub fn set_max_bytes_for_level_base(&mut self, size: u64) {
+        self.inner.set_max_bytes_for_level_base(size)
+    }
 }

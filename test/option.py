@@ -263,3 +263,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_db_write_buffer_size(128 * 1024 * 1024))
         self.assertRaises(TypeError, o.set_db_write_buffer_size, None)
+
+    def test_set_max_bytes_for_level_base(self):
+        o = Option()
+
+        self.assertIsNone(o.set_db_write_buffer_size(512 * 1024 * 1024))
+        self.assertRaises(TypeError, o.set_db_write_buffer_size, None)
