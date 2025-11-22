@@ -764,4 +764,22 @@ impl OptionPy {
     pub fn set_level_zero_file_num_compaction_trigger(&mut self, n: i32) {
         self.inner.set_level_zero_file_num_compaction_trigger(n)
     }
+
+    /// `SetMemtableHugePageSize` sets the page size for huge page for arena used by the memtable.
+    /// If <=0, it won't allocate from huge page but from malloc. Users are responsible to reserve
+    /// huge pages for it to be allocated. For example: `sysctl -w vm.nr_hugepages=20` See linux
+    /// doc `Documentation/vm/hugetlbpage.txt` If there isn't enough free huge page available, it
+    /// will fall back to malloc.
+    /// 
+    /// Dynamically changeable through SetOptions() API
+    /// 
+    /// Default: `N/A`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_memtable_huge_page_size(20)
+    /// ```
+    pub fn set_memtable_huge_page_size(&mut self, size: usize) {
+        self.inner.set_memtable_huge_page_size(size)
+    }
 }

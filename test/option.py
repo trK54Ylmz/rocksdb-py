@@ -281,3 +281,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_level_zero_file_num_compaction_trigger(8))
         self.assertRaises(TypeError, o.set_level_zero_file_num_compaction_trigger, None)
+
+    def test_set_memtable_huge_page_size(self):
+        o = Option()
+
+        self.assertIsNone(o.set_memtable_huge_page_size(20))
+        self.assertRaises(TypeError, o.set_memtable_huge_page_size, None)
