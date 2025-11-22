@@ -703,4 +703,20 @@ impl OptionPy {
     pub fn set_min_write_buffer_number(&mut self, nbuf: i32) {
         self.inner.set_min_write_buffer_number(nbuf)
     }
+
+    /// Amount of data to build up in memtables across all column families before writing to disk.
+    /// 
+    /// This is distinct from `write_buffer_size`, which enforces a limit for a single memtable.
+    /// 
+    /// This feature is disabled by default. Specify a non-zero value to enable it.
+    /// 
+    /// Default: `0 (disabled)`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_write_buffer_size(128 * 1024 * 1024)
+    /// ```
+    pub fn set_db_write_buffer_size(&mut self, size: usize) {
+        self.inner.set_db_write_buffer_size(size)
+    }
 }
