@@ -816,4 +816,16 @@ impl OptionPy {
     pub fn set_inplace_update_support(&mut self, enabled: bool) {
         self.inner.set_inplace_update_support(enabled)
     }
+
+    /// Sets the number of locks used for inplace update.
+    /// 
+    /// Default: `10000 when inplace_update_support = true, otherwise 0.`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_inplace_update_support(20_000)
+    /// ```
+    pub fn set_inplace_update_locks(&mut self, num: usize) {
+        self.inner.set_inplace_update_locks(num)
+    }
 }

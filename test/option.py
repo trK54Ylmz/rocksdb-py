@@ -299,3 +299,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_inplace_update_support(True))
         self.assertRaises(TypeError, o.set_inplace_update_support, None)
+
+    def test_set_inplace_update_locks(self):
+        o = Option()
+
+        self.assertIsNone(o.set_inplace_update_locks(25_000))
+        self.assertRaises(TypeError, o.set_inplace_update_locks, None)
