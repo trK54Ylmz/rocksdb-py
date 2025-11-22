@@ -687,4 +687,20 @@ impl OptionPy {
     pub fn set_target_file_size_multiplier(&mut self, multiplier: i32) {
         self.inner.set_target_file_size_multiplier(multiplier)
     }
+
+    /// Sets the minimum number of write buffers that will be merged before writing to storage.
+    /// If set to 1, then all write buffers are flushed to L0 as individual files and this
+    /// increases read amplification because a get request has to check in all of these files.
+    /// Also, an in-memory merge may result in writing lesser data to storage if there are
+    /// duplicate records in each of these individual write buffers.
+    /// 
+    /// Default: `1`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_min_write_buffer_number(2)
+    /// ```
+    pub fn set_min_write_buffer_number(&mut self, nbuf: i32) {
+        self.inner.set_min_write_buffer_number(nbuf)
+    }
 }

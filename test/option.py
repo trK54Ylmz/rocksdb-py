@@ -251,3 +251,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_target_file_size_multiplier(2))
         self.assertRaises(TypeError, o.set_target_file_size_multiplier, None)
+
+    def test_set_min_write_buffer_number(self):
+        o = Option()
+
+        self.assertIsNone(o.set_min_write_buffer_number(2))
+        self.assertRaises(TypeError, o.set_min_write_buffer_number, None)
