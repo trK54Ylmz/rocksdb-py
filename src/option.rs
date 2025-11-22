@@ -736,4 +736,17 @@ impl OptionPy {
     pub fn set_max_bytes_for_level_base(&mut self, size: u64) {
         self.inner.set_max_bytes_for_level_base(size)
     }
+
+    /// The manifest file is rolled over on reaching this limit. The older manifest file be
+    /// deleted. The default value is `MAX_INT` so that roll-over does not take place.
+    /// 
+    /// Default: `MAX_INT (maximum integer value for architecture, 32 or 64 bit).`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_max_manifest_file_size(20 * 1024 * 1024)
+    /// ```
+    pub fn set_max_manifest_file_size(&mut self, size: usize) {
+        self.inner.set_max_manifest_file_size(size)
+    }
 }

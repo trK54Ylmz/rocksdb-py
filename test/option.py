@@ -269,3 +269,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_db_write_buffer_size(512 * 1024 * 1024))
         self.assertRaises(TypeError, o.set_db_write_buffer_size, None)
+
+    def test_set_max_manifest_file_size(self):
+        o = Option()
+
+        self.assertIsNone(o.set_max_manifest_file_size(20 * 1024 * 1024))
+        self.assertRaises(TypeError, o.set_max_manifest_file_size, None)
