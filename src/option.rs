@@ -749,4 +749,19 @@ impl OptionPy {
     pub fn set_max_manifest_file_size(&mut self, size: usize) {
         self.inner.set_max_manifest_file_size(size)
     }
+
+    /// Sets the number of files to trigger level-0 compaction. A value < 0 means that level-0
+    /// compaction will not be triggered by number of files at all.
+    /// 
+    /// Dynamically changeable through `SetOptions()` API
+    /// 
+    /// Default: `4`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_level_zero_file_num_compaction_trigger(8)
+    /// ```
+    pub fn set_level_zero_file_num_compaction_trigger(&mut self, n: i32) {
+        self.inner.set_level_zero_file_num_compaction_trigger(n)
+    }
 }

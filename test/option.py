@@ -275,3 +275,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_max_manifest_file_size(20 * 1024 * 1024))
         self.assertRaises(TypeError, o.set_max_manifest_file_size, None)
+
+    def test_set_level_zero_file_num_compaction_trigger(self):
+        o = Option()
+
+        self.assertIsNone(o.set_level_zero_file_num_compaction_trigger(8))
+        self.assertRaises(TypeError, o.set_level_zero_file_num_compaction_trigger, None)
