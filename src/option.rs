@@ -906,4 +906,16 @@ impl OptionPy {
     pub fn set_max_total_wal_size(&mut self, size: u64) {
         self.inner.set_max_total_wal_size(size)
     }
+
+    /// If not zero, dump `rocksdb.stats` to LOG every `stats_dump_period_sec`.
+    /// 
+    /// Default: `600 (10 mins)`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_stats_dump_period_sec(300)
+    /// ```
+    pub fn set_stats_dump_period_sec(&mut self, period: u32) {
+        self.inner.set_stats_dump_period_sec(period)
+    }
 }

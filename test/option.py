@@ -329,3 +329,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_max_total_wal_size(1 << 30))
         self.assertRaises(TypeError, o.set_max_total_wal_size, None)
+
+    def test_set_stats_dump_period_sec(self):
+        o = Option()
+
+        self.assertIsNone(o.set_stats_dump_period_sec(300))
+        self.assertRaises(TypeError, o.set_stats_dump_period_sec, None)
