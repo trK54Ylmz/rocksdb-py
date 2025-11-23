@@ -317,3 +317,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_enable_pipelined_write(True))
         self.assertRaises(TypeError, o.set_enable_pipelined_write, None)
+
+    def test_set_report_bg_io_stats(self):
+        o = Option()
+
+        self.assertIsNone(o.set_report_bg_io_stats(True))
+        self.assertRaises(TypeError, o.set_report_bg_io_stats, None)

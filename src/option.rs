@@ -880,4 +880,16 @@ impl OptionPy {
     pub fn set_enable_pipelined_write(&mut self, value: bool) {
         self.inner.set_enable_pipelined_write(value)
     }
+
+    /// Measure IO stats in compactions and flushes, if `true`.
+    /// 
+    /// Default: `false`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_report_bg_io_stats(true)
+    /// ```
+    pub fn set_report_bg_io_stats(&mut self, enable: bool) {
+        self.inner.set_report_bg_io_stats(enable)
+    }
 }
