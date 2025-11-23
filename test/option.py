@@ -341,3 +341,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_stats_persist_period_sec(5))
         self.assertRaises(TypeError, o.set_stats_persist_period_sec, None)
+
+    def test_set_advise_random_on_open(self):
+        o = Option()
+
+        self.assertIsNone(o.set_advise_random_on_open(False))
+        self.assertRaises(TypeError, o.set_advise_random_on_open, None)

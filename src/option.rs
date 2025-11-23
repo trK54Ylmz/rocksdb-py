@@ -930,4 +930,17 @@ impl OptionPy {
     pub fn set_stats_persist_period_sec(&mut self, period: u32) {
         self.inner.set_stats_persist_period_sec(period)
     }
+
+    /// When set to `true`, reading SST files will opt out of the filesystem's readahead.
+    /// Setting this to false may improve sequential iteration performance.
+    /// 
+    /// Default: `true`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_advise_random_on_open(false)
+    /// ```
+    pub fn set_advise_random_on_open(&mut self, advise: bool) {
+        self.inner.set_advise_random_on_open(advise)
+    }
 }
