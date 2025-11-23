@@ -892,4 +892,18 @@ impl OptionPy {
     pub fn set_report_bg_io_stats(&mut self, enable: bool) {
         self.inner.set_report_bg_io_stats(enable)
     }
+
+    /// Once write-ahead logs exceed this size, we will start forcing the flush of column families
+    /// whose memtables are backed by the oldest live WAL file (i.e. the ones that are causing all
+    /// the space amplification).
+    /// 
+    /// Default: `0`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_max_total_wal_size(1 << 30)
+    /// ```
+    pub fn set_max_total_wal_size(&mut self, size: u64) {
+        self.inner.set_max_total_wal_size(size)
+    }
 }

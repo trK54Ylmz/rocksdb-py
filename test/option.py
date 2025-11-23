@@ -323,3 +323,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_report_bg_io_stats(True))
         self.assertRaises(TypeError, o.set_report_bg_io_stats, None)
+
+    def test_set_max_total_wal_size(self):
+        o = Option()
+
+        self.assertIsNone(o.set_max_total_wal_size(1 << 30))
+        self.assertRaises(TypeError, o.set_max_total_wal_size, None)
