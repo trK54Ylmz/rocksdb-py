@@ -860,4 +860,24 @@ impl OptionPy {
     pub fn set_max_write_buffer_size_to_maintain(&mut self, size: i64) {
         self.inner.set_max_write_buffer_size_to_maintain(size)
     }
+
+    /// By default, a single write thread queue is maintained. The thread gets to the head of the
+    /// queue becomes write batch group leader and responsible for writing to WAL and memtable for
+    /// the batch group.
+    /// 
+    /// If `enable_pipelined_write` is true, separate write thread queue is maintained for WAL
+    /// write and memtable write. A write thread first enter WAL writer queue and then memtable
+    /// writer queue. Pending thread on the WAL writer queue thus only have to wait for previous
+    /// writers to finish their WAL writing but not the memtable writing. Enabling the feature may
+    /// improve write throughput and reduce latency of the prepare phase of two-phase commit.
+    /// 
+    /// Default: `false`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_enable_pipelined_write(true)
+    /// ```
+    pub fn set_enable_pipelined_write(&mut self, value: bool) {
+        self.inner.set_enable_pipelined_write(value)
+    }
 }

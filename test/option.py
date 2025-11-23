@@ -311,3 +311,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_max_write_buffer_size_to_maintain(20_000))
         self.assertRaises(TypeError, o.set_max_write_buffer_size_to_maintain, None)
+
+    def test_set_enable_pipelined_write(self):
+        o = Option()
+
+        self.assertIsNone(o.set_enable_pipelined_write(True))
+        self.assertRaises(TypeError, o.set_enable_pipelined_write, None)
