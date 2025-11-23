@@ -918,4 +918,16 @@ impl OptionPy {
     pub fn set_stats_dump_period_sec(&mut self, period: u32) {
         self.inner.set_stats_dump_period_sec(period)
     }
+
+    /// If not zero, dump `rocksdb.stats` to RocksDB to LOG every `stats_persist_period_sec`.
+    /// 
+    /// Default: `600 (10 mins)`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_stats_persist_period_sec(5)
+    /// ```
+    pub fn set_stats_persist_period_sec(&mut self, period: u32) {
+        self.inner.set_stats_persist_period_sec(period)
+    }
 }

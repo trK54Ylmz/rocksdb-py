@@ -335,3 +335,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_stats_dump_period_sec(300))
         self.assertRaises(TypeError, o.set_stats_dump_period_sec, None)
+
+    def test_stats_persist_period_sec(self):
+        o = Option()
+
+        self.assertIsNone(o.set_stats_persist_period_sec(5))
+        self.assertRaises(TypeError, o.set_stats_persist_period_sec, None)
