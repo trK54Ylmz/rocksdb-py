@@ -347,3 +347,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_advise_random_on_open(False))
         self.assertRaises(TypeError, o.set_advise_random_on_open, None)
+
+    def test_set_use_adaptive_mutex(self):
+        o = Option()
+
+        self.assertIsNone(o.set_use_adaptive_mutex(True))
+        self.assertRaises(TypeError, o.set_use_adaptive_mutex, None)

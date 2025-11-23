@@ -943,4 +943,19 @@ impl OptionPy {
     pub fn set_advise_random_on_open(&mut self, advise: bool) {
         self.inner.set_advise_random_on_open(advise)
     }
+
+    /// Enable/disable adaptive mutex, which spins in the user space before resorting to kernel.
+    /// 
+    /// This could reduce context switch when the mutex is not heavily contended. However, if
+    /// the mutex is hot, we could end up wasting spin time.
+    /// 
+    /// Default: `false`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_use_adaptive_mutex(true)
+    /// ```
+    pub fn set_use_adaptive_mutex(&mut self, enabled: bool) {
+        self.inner.set_use_adaptive_mutex(enabled)
+    }
 }
