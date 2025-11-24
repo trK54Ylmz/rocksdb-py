@@ -1249,4 +1249,20 @@ impl OptionPy {
     pub fn set_memtable_whole_key_filtering(&mut self, whole_key_filter: bool) {
         self.inner.set_memtable_whole_key_filtering(whole_key_filter)
     }
+
+    /// Enable the use of key-value separation.
+    /// 
+    /// More details can be found here: [Integrated BlobDB](https://rocksdb.org/blog/2021/05/26/integrated-blob-db.html).
+    /// 
+    /// Dynamically changeable through `SetOptions()` API
+    /// 
+    /// Default: `false (disable)`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_enable_blob_files(true)
+    /// ```
+    pub fn set_enable_blob_files(&mut self, val: bool) {
+        self.inner.set_enable_blob_files(val)
+    }
 }

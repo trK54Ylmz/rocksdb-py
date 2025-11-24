@@ -473,3 +473,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_memtable_whole_key_filtering(True))
         self.assertRaises(TypeError, o.set_memtable_whole_key_filtering, None)
+
+    def test_set_enable_blob_files(self):
+        o = Option()
+
+        self.assertIsNone(o.set_enable_blob_files(True))
+        self.assertRaises(TypeError, o.set_enable_blob_files, None)
