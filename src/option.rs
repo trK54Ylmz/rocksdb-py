@@ -1284,4 +1284,20 @@ impl OptionPy {
     pub fn set_allow_ingest_behind(&mut self, val: bool) {
         self.inner.set_allow_ingest_behind(val)
     }
+
+    /// If `true`, working thread may avoid doing unnecessary and long-latency operation (such as
+    /// deleting obsolete files directly or deleting memtable) and will instead schedule a
+    /// background job to do it.
+    /// 
+    /// Use it if you're latency-sensitive.
+    /// 
+    /// Default: `false (disabled)`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_avoid_unnecessary_blocking_io(true)
+    /// ```
+    pub fn set_avoid_unnecessary_blocking_io(&mut self, val: bool) {
+        self.inner.set_avoid_unnecessary_blocking_io(val)
+    }
 }
