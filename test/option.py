@@ -401,3 +401,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_allow_mmap_writes(True))
         self.assertRaises(TypeError, o.set_allow_mmap_writes, None)
+
+    def test_set_manual_wal_flush(self):
+        o = Option()
+
+        self.assertIsNone(o.set_manual_wal_flush(True))
+        self.assertRaises(TypeError, o.set_manual_wal_flush, None)

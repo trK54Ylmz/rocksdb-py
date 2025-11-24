@@ -1078,4 +1078,17 @@ impl OptionPy {
     pub fn set_allow_mmap_writes(&mut self, is_enabled: bool) {
         self.inner.set_allow_mmap_writes(is_enabled)
     }
+
+    /// If enabled, WAL is not flushed automatically after each write. Instead it relies on manual
+    /// invocation of `DB::flush_wal()` to write the WAL buffer to its file.
+    /// 
+    /// Default: `false`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_manual_wal_flush(true)
+    /// ```
+    pub fn set_manual_wal_flush(&mut self, is_enabled: bool) {
+        self.inner.set_manual_wal_flush(is_enabled)
+    }
 }
