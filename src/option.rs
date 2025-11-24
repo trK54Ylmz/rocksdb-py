@@ -1354,4 +1354,14 @@ impl OptionPy {
     pub fn set_write_dbid_to_manifest(&mut self, val: bool) {
         self.inner.set_write_dbid_to_manifest(val)
     }
+
+    /// Returns the value of the `write_dbid_to_manifest` option.
+    /// 
+    /// Examples
+    /// ```
+    /// opts.get_write_dbid_to_manifest()
+    /// ```
+    pub fn get_write_dbid_to_manifest(&self) -> bool {
+        return self.inner.get_write_dbid_to_manifest()
+    }
 }

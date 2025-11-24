@@ -509,3 +509,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_write_dbid_to_manifest(False))
         self.assertRaises(TypeError, o.set_write_dbid_to_manifest, None)
+
+    def test_get_write_dbid_to_manifest(self):
+        o = Option()
+
+        self.assertIsNotNone(o.get_write_dbid_to_manifest())
+        self.assertRaises(TypeError, o.get_write_dbid_to_manifest, None)
