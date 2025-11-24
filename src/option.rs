@@ -1276,6 +1276,8 @@ impl OptionPy {
     /// 
     /// Note that only Universal Compaction supports `allow_ingest_behind`.
     /// `num_levels` should be >= 3 if this option is turned on.
+    /// 
+    /// Default: `false Immutable`
     ///
     /// Examples
     /// ```
