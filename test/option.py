@@ -497,3 +497,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_track_and_verify_wals_in_manifest(True))
         self.assertRaises(TypeError, o.set_track_and_verify_wals_in_manifest, None)
+
+    def test_get_track_and_verify_wals_in_manifest(self):
+        o = Option()
+
+        self.assertIsNotNone(o.get_track_and_verify_wals_in_manifest())
+        self.assertRaises(TypeError, o.get_track_and_verify_wals_in_manifest, None)

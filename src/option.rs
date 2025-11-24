@@ -1325,4 +1325,14 @@ impl OptionPy {
     pub fn set_track_and_verify_wals_in_manifest(&mut self, val: bool) {
         self.inner.set_track_and_verify_wals_in_manifest(val)
     }
+
+    /// Returns the value of the `track_and_verify_wals_in_manifest` option.
+    /// 
+    /// Examples
+    /// ```
+    /// opts.get_track_and_verify_wals_in_manifest()
+    /// ```
+    pub fn get_track_and_verify_wals_in_manifest(&self) -> bool {
+        return self.inner.get_track_and_verify_wals_in_manifest()
+    }
 }
