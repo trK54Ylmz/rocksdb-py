@@ -1121,4 +1121,17 @@ impl OptionPy {
     pub fn set_ratelimiter(&mut self, rate_bytes_per_sec: i64, refill_period_us: i64, fairness: i32) {
         self.inner.set_ratelimiter(rate_bytes_per_sec, refill_period_us, fairness)
     }
+
+    /// Use to control write rate of flush and compaction. Flush has higher priority than
+    /// compaction. If rate limiter is enabled, `bytes_per_sync` is set to 1MB by default.
+    /// 
+    /// Default: `disable`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_auto_tuned_ratelimiter(true)
+    /// ```
+    pub fn set_auto_tuned_ratelimiter(&mut self, rate_bytes_per_sec: i64, refill_period_us: i64, fairness: i32) {
+        self.inner.set_auto_tuned_ratelimiter(rate_bytes_per_sec, refill_period_us, fairness)
+    }
 }
