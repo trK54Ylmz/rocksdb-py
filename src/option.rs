@@ -1207,4 +1207,18 @@ impl OptionPy {
     pub fn set_hard_pending_compaction_bytes_limit(&mut self, limit: usize) {
         self.inner.set_hard_pending_compaction_bytes_limit(limit)
     }
+
+    /// Sets the size of one block in arena memory allocation.
+    /// 
+    /// If <= 0, a proper value is automatically calculated (usually 1/10 of `writer_buffer_size`).
+    /// 
+    /// Default: `0`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_arena_block_size(32 * 1024 * 1024)
+    /// ```
+    pub fn set_arena_block_size(&mut self, size: usize) {
+        self.inner.set_arena_block_size(size)
+    }
 }
