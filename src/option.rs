@@ -1066,4 +1066,16 @@ impl OptionPy {
     pub fn set_keep_log_file_num(&mut self, nfiles: usize) {
         self.inner.set_keep_log_file_num(nfiles)
     }
+
+    /// Allow the OS to mmap file for writing.
+    /// 
+    /// Default: `false`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_allow_mmap_writes(true)
+    /// ```
+    pub fn set_allow_mmap_writes(&mut self, is_enabled: bool) {
+        self.inner.set_allow_mmap_writes(is_enabled)
+    }
 }

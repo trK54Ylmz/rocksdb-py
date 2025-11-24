@@ -395,3 +395,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_keep_log_file_num(2_500))
         self.assertRaises(TypeError, o.set_keep_log_file_num, None)
+
+    def test_set_allow_mmap_writes(self):
+        o = Option()
+
+        self.assertIsNone(o.set_allow_mmap_writes(True))
+        self.assertRaises(TypeError, o.set_allow_mmap_writes, None)
