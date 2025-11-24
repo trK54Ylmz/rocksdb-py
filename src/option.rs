@@ -972,4 +972,19 @@ impl OptionPy {
     pub fn set_memtable_prefix_bloom_ratio(&mut self, ratio: f64) {
         self.inner.set_memtable_prefix_bloom_ratio(ratio)
     }
+
+    /// Sets the maximum number of bytes in all compacted files. We try to limit number of bytes in
+    /// one compaction to be lower than this threshold. But it's not guaranteed.
+    /// 
+    /// Value 0 will be sanitized.
+    /// 
+    /// Default: `target_file_size_base * 25`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_max_compaction_bytes(0)
+    /// ```
+    pub fn set_max_compaction_bytes(&mut self, nbytes: u64) {
+        self.inner.set_max_compaction_bytes(nbytes)
+    }
 }

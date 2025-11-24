@@ -359,3 +359,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_memtable_prefix_bloom_ratio(0.2))
         self.assertRaises(TypeError, o.set_memtable_prefix_bloom_ratio, None)
+
+    def test_set_max_compaction_bytes(self):
+        o = Option()
+
+        self.assertIsNone(o.set_max_compaction_bytes(0))
+        self.assertRaises(TypeError, o.set_max_compaction_bytes, None)
