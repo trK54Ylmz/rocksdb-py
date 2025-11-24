@@ -449,3 +449,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_soft_pending_compaction_bytes_limit(96 * 1024 * 1024 * 1024))
         self.assertRaises(TypeError, o.set_soft_pending_compaction_bytes_limit, None)
+
+    def test_set_hard_pending_compaction_bytes_limit(self):
+        o = Option()
+
+        self.assertIsNone(o.set_hard_pending_compaction_bytes_limit(512 * 1024 * 1024 * 1024))
+        self.assertRaises(TypeError, o.set_hard_pending_compaction_bytes_limit, None)

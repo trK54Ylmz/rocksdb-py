@@ -1194,4 +1194,17 @@ impl OptionPy {
     pub fn set_soft_pending_compaction_bytes_limit(&mut self, limit: usize) {
         self.inner.set_soft_pending_compaction_bytes_limit(limit)
     }
+
+    /// Sets the bytes threshold at which all writes are stopped if estimated bytes needed to be
+    /// compaction exceed this threshold.
+    /// 
+    /// Default: `256GB`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_hard_pending_compaction_bytes_limit(512 * 1024 * 1024 * 1024)
+    /// ```
+    pub fn set_hard_pending_compaction_bytes_limit(&mut self, limit: usize) {
+        self.inner.set_hard_pending_compaction_bytes_limit(limit)
+    }
 }
