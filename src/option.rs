@@ -1233,4 +1233,20 @@ impl OptionPy {
     pub fn set_dump_malloc_stats(&mut self, enabled: bool) {
         self.inner.set_dump_malloc_stats(enabled)
     }
+
+    /// Enable whole key bloom filter in memtable. Note this will only take effect if
+    /// `memtable_prefix_bloom_size_ratio` is not 0. Enabling whole key filtering can potentially
+    /// reduce CPU usage for point-look-ups.
+    /// 
+    /// Dynamically changeable through `SetOptions()` API
+    /// 
+    /// Default: `false (disable)`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_memtable_whole_key_filtering(true)
+    /// ```
+    pub fn set_memtable_whole_key_filtering(&mut self, whole_key_filter: bool) {
+        self.inner.set_memtable_whole_key_filtering(whole_key_filter)
+    }
 }

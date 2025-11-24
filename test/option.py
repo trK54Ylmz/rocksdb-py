@@ -467,3 +467,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_dump_malloc_stats(True))
         self.assertRaises(TypeError, o.set_dump_malloc_stats, None)
+
+    def test_set_memtable_whole_key_filtering(self):
+        o = Option()
+
+        self.assertIsNone(o.set_memtable_whole_key_filtering(True))
+        self.assertRaises(TypeError, o.set_memtable_whole_key_filtering, None)
