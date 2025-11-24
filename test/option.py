@@ -437,3 +437,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_log_file_time_to_roll(86_400))
         self.assertRaises(TypeError, o.set_log_file_time_to_roll, None)
+
+    def test_set_recycle_log_file_num(self):
+        o = Option()
+
+        self.assertIsNone(o.set_recycle_log_file_num(3))
+        self.assertRaises(TypeError, o.set_recycle_log_file_num, None)

@@ -1164,4 +1164,21 @@ impl OptionPy {
     pub fn set_log_file_time_to_roll(&mut self, secs: usize) {
         self.inner.set_log_file_time_to_roll(secs)
     }
+
+    /// Controls the recycling of log files.
+    /// 
+    /// If non-zero, previously written log files will be reused for new logs, overwriting the old
+    /// data. The value indicates how many such files we will keep around at any point in time for
+    /// later use. This is more efficient because the blocks are already allocated and fdatasync
+    /// does not need to update the inode after each write.
+    /// 
+    /// Default: `0`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_recycle_log_file_num(3)
+    /// ```
+    pub fn set_recycle_log_file_num(&mut self, num: usize) {
+        self.inner.set_recycle_log_file_num(num)
+    }
 }
