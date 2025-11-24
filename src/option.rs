@@ -1040,4 +1040,18 @@ impl OptionPy {
     pub fn set_manifest_preallocation_size(&mut self, size: usize) {
         self.inner.set_manifest_preallocation_size(size)
     }
+
+    /// If true, then `DB::Open()` will not update the statistics used to optimize compaction
+    /// decision by loading table properties from many files. Turning off this feature will
+    /// improve DBOpen time especially in disk environment.
+    /// 
+    /// Default: `false`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_manifest_preallocation_size(true)
+    /// ```
+    pub fn set_skip_stats_update_on_db_open(&mut self, skip: bool) {
+        self.inner.set_skip_stats_update_on_db_open(skip)
+    }
 }

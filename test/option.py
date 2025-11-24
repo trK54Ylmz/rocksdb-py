@@ -383,3 +383,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_manifest_preallocation_size(8 * 1024 * 1024))
         self.assertRaises(TypeError, o.set_manifest_preallocation_size, None)
+
+    def test_set_skip_stats_update_on_db_open(self):
+        o = Option()
+
+        self.assertIsNone(o.set_skip_stats_update_on_db_open(True))
+        self.assertRaises(TypeError, o.set_skip_stats_update_on_db_open, None)
