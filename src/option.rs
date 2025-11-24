@@ -1108,4 +1108,17 @@ impl OptionPy {
     pub fn set_atomic_flush(&mut self, atomic_flush: bool) {
         self.inner.set_atomic_flush(atomic_flush)
     }
+
+    /// Use to control write rate of flush and compaction. Flush has higher priority than
+    /// compaction. If rate limiter is enabled, `bytes_per_sync` is set to 1MB by default.
+    /// 
+    /// Default: `disable`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_ratelimiter(true)
+    /// ```
+    pub fn set_ratelimiter(&mut self, rate_bytes_per_sec: i64, refill_period_us: i64, fairness: i32) {
+        self.inner.set_ratelimiter(rate_bytes_per_sec, refill_period_us, fairness)
+    }
 }

@@ -413,3 +413,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_atomic_flush(True))
         self.assertRaises(TypeError, o.set_atomic_flush, None)
+
+    def test_set_ratelimiter(self):
+        o = Option()
+
+        self.assertIsNone(o.set_ratelimiter(1024 * 1024, 100 * 1000, 10))
+        self.assertRaises(TypeError, o.set_ratelimiter, None, None, None)
