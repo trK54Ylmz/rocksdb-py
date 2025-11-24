@@ -503,3 +503,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNotNone(o.get_track_and_verify_wals_in_manifest())
         self.assertRaises(TypeError, o.get_track_and_verify_wals_in_manifest, None)
+
+    def test_set_write_dbid_to_manifest(self):
+        o = Option()
+
+        self.assertIsNone(o.set_write_dbid_to_manifest(False))
+        self.assertRaises(TypeError, o.set_write_dbid_to_manifest, None)
