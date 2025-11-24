@@ -365,3 +365,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_max_compaction_bytes(0))
         self.assertRaises(TypeError, o.set_max_compaction_bytes, None)
+
+    def test_set_wal_ttl_seconds(self):
+        o = Option()
+
+        self.assertIsNone(o.set_wal_ttl_seconds(30))
+        self.assertRaises(TypeError, o.set_wal_ttl_seconds, None)
