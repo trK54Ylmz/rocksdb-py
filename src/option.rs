@@ -1302,4 +1302,27 @@ impl OptionPy {
     pub fn set_avoid_unnecessary_blocking_io(&mut self, val: bool) {
         self.inner.set_avoid_unnecessary_blocking_io(val)
     }
+
+    /// If true, the log numbers and sizes of the synced WALs are tracked in MANIFEST. During DB
+    /// recovery, if a synced WAL is missing from disk, or the WAL's size does not match the
+    /// recorded size in MANIFEST, an error will be reported and the recovery will be aborted.
+    /// 
+    /// This is one additional protection against WAL corruption besides
+    /// the per-WAL-entry checksum.
+    /// 
+    /// Note that this option does not work with secondary instance. Currently, only syncing closed
+    /// WALs are tracked. Calling `DB::SyncWAL()`, etc. or writing with `WriteOptions::sync=true`
+    /// to sync the live WAL is not tracked for performance/efficiency reasons.
+    /// 
+    /// See: https://github.com/facebook/rocksdb/wiki/Track-WAL-in-MANIFEST
+    /// 
+    /// Default: `false (disabled)`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_track_and_verify_wals_in_manifest(true)
+    /// ```
+    pub fn set_track_and_verify_wals_in_manifest(&mut self, val: bool) {
+        self.inner.set_track_and_verify_wals_in_manifest(val)
+    }
 }
