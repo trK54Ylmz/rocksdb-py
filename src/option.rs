@@ -958,4 +958,18 @@ impl OptionPy {
     pub fn set_use_adaptive_mutex(&mut self, enabled: bool) {
         self.inner.set_use_adaptive_mutex(enabled)
     }
+
+    /// When a prefix_extractor is defined through `opts.set_prefix_extractor` this creates a
+    /// prefix bloom filter for each memtable with the size of
+    /// `write_buffer_size * memtable_prefix_bloom_ratio` (capped at 0.25).
+    /// 
+    /// Default: `0`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_memtable_prefix_bloom_ratio(0.2)
+    /// ```
+    pub fn set_memtable_prefix_bloom_ratio(&mut self, ratio: f64) {
+        self.inner.set_memtable_prefix_bloom_ratio(ratio)
+    }
 }

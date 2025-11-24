@@ -353,3 +353,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_use_adaptive_mutex(True))
         self.assertRaises(TypeError, o.set_use_adaptive_mutex, None)
+
+    def test_set_memtable_prefix_bloom_ratio(self):
+        o = Option()
+
+        self.assertIsNone(o.set_memtable_prefix_bloom_ratio(0.2))
+        self.assertRaises(TypeError, o.set_memtable_prefix_bloom_ratio, None)
