@@ -1221,4 +1221,16 @@ impl OptionPy {
     pub fn set_arena_block_size(&mut self, size: usize) {
         self.inner.set_arena_block_size(size)
     }
+
+    /// If `true`, then print malloc stats together with `rocksdb.stats` when printing to LOG.
+    /// 
+    /// Default: `false`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_dump_malloc_stats(true)
+    /// ```
+    pub fn set_dump_malloc_stats(&mut self, enabled: bool) {
+        self.inner.set_dump_malloc_stats(enabled)
+    }
 }

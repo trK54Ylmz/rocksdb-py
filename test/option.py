@@ -461,3 +461,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_arena_block_size(32 * 1024 * 1024))
         self.assertRaises(TypeError, o.set_arena_block_size, None)
+
+    def test_set_dump_malloc_stats(self):
+        o = Option()
+
+        self.assertIsNone(o.set_dump_malloc_stats(True))
+        self.assertRaises(TypeError, o.set_dump_malloc_stats, None)
