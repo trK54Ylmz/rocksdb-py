@@ -1149,4 +1149,19 @@ impl OptionPy {
     pub fn set_max_log_file_size(&mut self, size: usize) {
         self.inner.set_max_log_file_size(size)
     }
+
+    /// Sets the time for the info log file to roll (in seconds).
+    /// 
+    /// If specified with non-zero value, log file will be rolled if it has been active longer
+    /// than `log_file_time_to_roll`.
+    /// 
+    /// Default: `0 (disabled)`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_max_log_file_size(86_400)
+    /// ```
+    pub fn set_log_file_time_to_roll(&mut self, secs: usize) {
+        self.inner.set_log_file_time_to_roll(secs)
+    }
 }

@@ -431,3 +431,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_max_log_file_size(10 * 1024 * 1024))
         self.assertRaises(TypeError, o.set_max_log_file_size, None)
+
+    def test_set_log_file_time_to_roll(self):
+        o = Option()
+
+        self.assertIsNone(o.set_log_file_time_to_roll(86_400))
+        self.assertRaises(TypeError, o.set_log_file_time_to_roll, None)
