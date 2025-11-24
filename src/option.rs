@@ -1134,4 +1134,19 @@ impl OptionPy {
     pub fn set_auto_tuned_ratelimiter(&mut self, rate_bytes_per_sec: i64, refill_period_us: i64, fairness: i32) {
         self.inner.set_auto_tuned_ratelimiter(rate_bytes_per_sec, refill_period_us, fairness)
     }
+
+    /// Sets the maximal size of the info log file.
+    /// 
+    /// If the log file is larger than `max_log_file_size`, a new info log file will be created.
+    /// If `max_log_file_size` is equal to zero, all logs will be written to one log file.
+    /// 
+    /// Default: `0`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_max_log_file_size(10 * 1024 * 1024)
+    /// ```
+    pub fn set_max_log_file_size(&mut self, size: usize) {
+        self.inner.set_max_log_file_size(size)
+    }
 }

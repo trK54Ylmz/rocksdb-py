@@ -425,3 +425,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_auto_tuned_ratelimiter(1024 * 1024, 100 * 1000, 10))
         self.assertRaises(TypeError, o.set_auto_tuned_ratelimiter, None, None, None)
+
+    def test_set_max_log_file_size(self):
+        o = Option()
+
+        self.assertIsNone(o.set_max_log_file_size(10 * 1024 * 1024))
+        self.assertRaises(TypeError, o.set_max_log_file_size, None)
