@@ -292,12 +292,12 @@ impl OptionPy {
     }
 
     /// Optimize level style compaction.
-    /// 
+    ///
     /// Default values for some parameters in `Options`` are not optimized for heavy workloads and
     /// big datasets, which means you might observe write stalls under some conditions.
-    /// 
+    ///
     /// This can be used as one of the starting points for tuning RocksDB options in such cases.
-    /// 
+    ///
     /// Internally, it sets `write_buffer_size`, `min_write_buffer_number_to_merge`,
     /// `max_write_buffer_number`, `level0_file_num_compaction_trigger`, `target_file_size_base`,
     /// `max_bytes_for_level_base`, so it can override if those parameters were set before.
@@ -383,7 +383,7 @@ impl OptionPy {
 
     /// Number of threads for parallel compression. Parallel compression is enabled
     /// only if threads > 1. **THE FEATURE IS STILL EXPERIMENTAL**
-    /// 
+    ///
     /// See [code](https://github.com/facebook/rocksdb/blob/v8.6.7/include/rocksdb/advanced_options.h#L116-L127) for more information.
     ///
     /// Default: `1`
@@ -435,7 +435,7 @@ impl OptionPy {
     /// Sets maximum size of training data passed to zstd's dictionary trainer. Using zstd's
     /// dictionary trainer can achieve even better compression ratio improvements than
     /// using `max_dict_bytes` alone.
-    /// 
+    ///
     /// The training data will be used to generate a dictionary of `max_dict_bytes`.
     ///
     /// Default: `0`
@@ -451,7 +451,7 @@ impl OptionPy {
     /// Sets maximum size of training data passed to zstd's dictionary trainer when compressing the
     /// bottom-most level. Using zstd's dictionary trainer can achieve even better compression
     /// ratio improvements than using `max_dict_bytes` alone.
-    /// 
+    ///
     /// The training data will be used to generate a dictionary of `max_dict_bytes`.
     ///
     /// Default: `0`
@@ -505,7 +505,7 @@ impl OptionPy {
     }
 
     /// Sets the periodicity when obsolete files get deleted.
-    /// 
+    ///
     /// The files that get out of scope by compaction process will still get automatically delete
     /// on every compaction, regardless of this setting.
     ///
@@ -520,7 +520,7 @@ impl OptionPy {
     }
 
     /// Prepare the DB for bulk loading.
-    /// 
+    ///
     /// All data will be in level 0 without any automatic compaction. It's recommended to manually
     /// call `CompactRange(NULL, NULL)` before reading from the database, because otherwise the
     /// read can be very slow.
@@ -551,7 +551,7 @@ impl OptionPy {
     /// Same as bytes_per_sync, but applies to WAL files.
     ///
     /// Dynamically changeable through `SetDBOptions()` API.
-    /// 
+    ///
     /// Default: `0, turned off`
     ///
     /// Examples
@@ -563,13 +563,13 @@ impl OptionPy {
     }
 
     /// Sets the maximum buffer size that is used by `WritableFileWriter`.
-    /// 
+    ///
     /// On Windows, we need to maintain an aligned buffer for writes. We allow the buffer to grow
     /// until it's size hits the limit in buffered IO and fix the buffer size when using direct IO
     /// to ensure alignment of write requests if the logical sector size is unusual
     ///
     /// Dynamically changeable through `SetDBOptions()` API.
-    /// 
+    ///
     /// Default: `1024 * 1024 (1 MB)`
     ///
     /// Examples
@@ -585,7 +585,7 @@ impl OptionPy {
     /// for SkipListFactory. Concurrent memtable writes are not compatible with
     /// inplace_update_support or filter_deletes. It is strongly recommended
     /// to set `enable_write_thread_adaptive_yield` if you are going to use this feature.
-    /// 
+    ///
     /// Default: `true`
     ///
     /// Examples
@@ -600,7 +600,7 @@ impl OptionPy {
     /// `write_thread_max_yield_usec` before blocking on a mutex. This can substantially improve
     /// throughput for concurrent workloads, regardless
     /// of whether `allow_concurrent_memtable_write` is enabled.
-    /// 
+    ///
     /// Default: `true`
     ///
     /// Examples
@@ -613,10 +613,10 @@ impl OptionPy {
 
     /// Specifies whether an `iteration->Next()` sequentially skips over keys with the same
     /// user-key or not.
-    /// 
+    ///
     /// This number specifies the number of keys (with the same userkey) that will be sequentially
     /// skipped before a reseek is issued.
-    /// 
+    ///
     /// Default: `8`
     ///
     /// Examples
@@ -629,11 +629,11 @@ impl OptionPy {
 
     /// Enable direct I/O mode for reading they may or may not improve performance depending on
     /// the use case
-    /// 
+    ///
     /// Files will be opened in "direct I/O" mode which means that data read from the disk will not
     /// be cached or buffered. The hardware buffer of the devices may however still be used.
     /// Memory mapped files are not impacted by these parameters.
-    /// 
+    ///
     /// Default: `false`
     ///
     /// Examples
@@ -645,12 +645,12 @@ impl OptionPy {
     }
 
     /// Enable direct I/O mode for flush and compaction
-    /// 
+    ///
     /// Files will be opened in "direct I/O" mode which means that data written to the disk will
     /// not be cached or buffered. The hardware buffer of the devices may however still be used.
     /// Memory mapped files are not impacted by these parameters. they may or may not improve
     /// performance depending on the use case
-    /// 
+    ///
     /// Default: `false`
     ///
     /// Examples
@@ -662,7 +662,7 @@ impl OptionPy {
     }
 
     /// Enable/disable child process inherit open files.
-    /// 
+    ///
     /// Default: `true`
     ///
     /// Examples
@@ -675,9 +675,9 @@ impl OptionPy {
 
     /// By default `target_file_size_multiplier` is 1, which means by default files in different
     /// levels will have similar size.
-    /// 
+    ///
     /// Dynamically changeable through `SetOptions()` API
-    /// 
+    ///
     /// Default: `1`
     ///
     /// Examples
@@ -693,7 +693,7 @@ impl OptionPy {
     /// increases read amplification because a get request has to check in all of these files.
     /// Also, an in-memory merge may result in writing lesser data to storage if there are
     /// duplicate records in each of these individual write buffers.
-    /// 
+    ///
     /// Default: `1`
     ///
     /// Examples
@@ -705,11 +705,11 @@ impl OptionPy {
     }
 
     /// Amount of data to build up in memtables across all column families before writing to disk.
-    /// 
+    ///
     /// This is distinct from `write_buffer_size`, which enforces a limit for a single memtable.
-    /// 
+    ///
     /// This feature is disabled by default. Specify a non-zero value to enable it.
-    /// 
+    ///
     /// Default: `0 (disabled)`
     ///
     /// Examples
@@ -726,7 +726,7 @@ impl OptionPy {
     /// For example, if `max_bytes_for_level_base` is 200MB,
     /// and if `max_bytes_for_level_multiplier` is 10, total data size for level-1 will be 200MB,
     /// total file size for level-2 will be 2GB, and total file size for level-3 will be 20GB.
-    /// 
+    ///
     /// Default: `0x10000000 (256MiB).`
     ///
     /// Examples
@@ -739,7 +739,7 @@ impl OptionPy {
 
     /// The manifest file is rolled over on reaching this limit. The older manifest file be
     /// deleted. The default value is `MAX_INT` so that roll-over does not take place.
-    /// 
+    ///
     /// Default: `MAX_INT (maximum integer value for architecture, 32 or 64 bit).`
     ///
     /// Examples
@@ -752,9 +752,9 @@ impl OptionPy {
 
     /// Sets the number of files to trigger level-0 compaction. A value < 0 means that level-0
     /// compaction will not be triggered by number of files at all.
-    /// 
+    ///
     /// Dynamically changeable through `SetOptions()` API
-    /// 
+    ///
     /// Default: `4`
     ///
     /// Examples
@@ -770,9 +770,9 @@ impl OptionPy {
     /// huge pages for it to be allocated. For example: `sysctl -w vm.nr_hugepages=20` See linux
     /// doc `Documentation/vm/hugetlbpage.txt` If there isn't enough free huge page available, it
     /// will fall back to malloc.
-    /// 
+    ///
     /// Dynamically changeable through SetOptions() API
-    /// 
+    ///
     /// Default: `N/A`
     ///
     /// Examples
@@ -784,12 +784,12 @@ impl OptionPy {
     }
 
     /// Sets the maximum number of successive merge operations on a key in the memtable.
-    /// 
+    ///
     /// When a merge operation is added to the memtable and the maximum number of successive merges
     /// is reached, the value of the key will be calculated and inserted into the memtable instead
     /// of the merge operation. This will ensure that there are never
     /// more than `max_successive_merges` merge operations in the memtable.
-    /// 
+    ///
     /// Default: `0 (disabled)`
     ///
     /// Examples
@@ -801,12 +801,12 @@ impl OptionPy {
     }
 
     /// Enable/disable thread-safe inplace updates.
-    /// 
+    ///
     /// Requires updates if
     /// - key exists in current memtable
     /// - new `sizeof(new_value)` <= `sizeof(old_value)`
     /// - `old_value` for that key is a put i.e. `kTypeValue`
-    /// 
+    ///
     /// Default: `false`
     ///
     /// Examples
@@ -818,7 +818,7 @@ impl OptionPy {
     }
 
     /// Sets the number of locks used for inplace update.
-    /// 
+    ///
     /// Default: `10000 when inplace_update_support = true, otherwise 0.`
     ///
     /// Examples
@@ -839,18 +839,18 @@ impl OptionPy {
     /// flushed Memtables, with sizes of 32MB, 20MB, 20MB. Because trimming the next Memtable of
     /// size 20MB will reduce total memory usage to 52MB which is below the limit, RocksDB
     /// will stop trimming.
-    /// 
+    ///
     /// When using an OptimisticTransactionDB: If this value is too low, some transactions may fail
     /// at commit time due to not being able to determine whether there were any write conflicts.
-    /// 
+    ///
     /// When using a TransactionDB: If `Transaction::SetSnapshot` is used, TransactionDB will read
     /// either in-memory write buffers or SST files to do write-conflict checking. Increasing this
     /// value can reduce the number of reads to SST files done for conflict detection.
-    /// 
+    ///
     /// Setting this value to 0 will cause write buffers to be freed immediately after
     /// they are flushed. If this value is set to -1, `max_write_buffer_number * write_buffer_size`
     /// will be used.
-    /// 
+    ///
     /// Default: `If using a TransactionDB/OptimisticTransactionDB, the default value will be set to the value of 'max_write_buffer_number * write_buffer_size' if it is not explicitly set by the user. Otherwise, the default is 0.`
     ///
     /// Examples
@@ -864,13 +864,13 @@ impl OptionPy {
     /// By default, a single write thread queue is maintained. The thread gets to the head of the
     /// queue becomes write batch group leader and responsible for writing to WAL and memtable for
     /// the batch group.
-    /// 
+    ///
     /// If `enable_pipelined_write` is true, separate write thread queue is maintained for WAL
     /// write and memtable write. A write thread first enter WAL writer queue and then memtable
     /// writer queue. Pending thread on the WAL writer queue thus only have to wait for previous
     /// writers to finish their WAL writing but not the memtable writing. Enabling the feature may
     /// improve write throughput and reduce latency of the prepare phase of two-phase commit.
-    /// 
+    ///
     /// Default: `false`
     ///
     /// Examples
@@ -882,7 +882,7 @@ impl OptionPy {
     }
 
     /// Measure IO stats in compactions and flushes, if `true`.
-    /// 
+    ///
     /// Default: `false`
     ///
     /// Examples
@@ -896,7 +896,7 @@ impl OptionPy {
     /// Once write-ahead logs exceed this size, we will start forcing the flush of column families
     /// whose memtables are backed by the oldest live WAL file (i.e. the ones that are causing all
     /// the space amplification).
-    /// 
+    ///
     /// Default: `0`
     ///
     /// Examples
@@ -908,7 +908,7 @@ impl OptionPy {
     }
 
     /// If not zero, dump `rocksdb.stats` to LOG every `stats_dump_period_sec`.
-    /// 
+    ///
     /// Default: `600 (10 mins)`
     ///
     /// Examples
@@ -920,7 +920,7 @@ impl OptionPy {
     }
 
     /// If not zero, dump `rocksdb.stats` to RocksDB to LOG every `stats_persist_period_sec`.
-    /// 
+    ///
     /// Default: `600 (10 mins)`
     ///
     /// Examples
@@ -933,7 +933,7 @@ impl OptionPy {
 
     /// When set to `true`, reading SST files will opt out of the filesystem's readahead.
     /// Setting this to false may improve sequential iteration performance.
-    /// 
+    ///
     /// Default: `true`
     ///
     /// Examples
@@ -945,10 +945,10 @@ impl OptionPy {
     }
 
     /// Enable/disable adaptive mutex, which spins in the user space before resorting to kernel.
-    /// 
+    ///
     /// This could reduce context switch when the mutex is not heavily contended. However, if
     /// the mutex is hot, we could end up wasting spin time.
-    /// 
+    ///
     /// Default: `false`
     ///
     /// Examples
@@ -962,7 +962,7 @@ impl OptionPy {
     /// When a prefix_extractor is defined through `opts.set_prefix_extractor` this creates a
     /// prefix bloom filter for each memtable with the size of
     /// `write_buffer_size * memtable_prefix_bloom_ratio` (capped at 0.25).
-    /// 
+    ///
     /// Default: `0`
     ///
     /// Examples
@@ -975,9 +975,9 @@ impl OptionPy {
 
     /// Sets the maximum number of bytes in all compacted files. We try to limit number of bytes in
     /// one compaction to be lower than this threshold. But it's not guaranteed.
-    /// 
+    ///
     /// Value 0 will be sanitized.
-    /// 
+    ///
     /// Default: `target_file_size_base * 25`
     ///
     /// Examples
@@ -989,7 +989,7 @@ impl OptionPy {
     }
 
     /// Sets the WAL ttl in seconds.
-    /// 
+    ///
     /// The following two options affect how archived logs will be deleted.
     /// 1. If both set to 0, logs will be deleted asap and will not get into the archive.
     /// 2. If `wal_ttl_seconds` is 0 and `wal_size_limit_mb` is not 0, WAL files will be checked
@@ -1000,7 +1000,7 @@ impl OptionPy {
     /// be deleted.
     /// 4. If both are not 0, WAL files will be checked every 10 min and both checks will be
     /// performed with ttl being first.
-    /// 
+    ///
     /// Default: `0`
     ///
     /// Examples
@@ -1012,10 +1012,10 @@ impl OptionPy {
     }
 
     /// Sets the WAL size limit in MB.
-    /// 
+    ///
     /// If total size of WAL files is greater then `wal_size_limit_mb`, they will be deleted
     /// starting with the earliest until `size_limit` is met.
-    /// 
+    ///
     /// Default: `0`
     ///
     /// Examples
@@ -1027,10 +1027,10 @@ impl OptionPy {
     }
 
     /// Sets the number of bytes to preallocate (via fallocate) the manifest files.
-    /// 
+    ///
     /// Default is 4MB, which is reasonable to reduce random IO as well as prevent overallocation
     /// for mounts that preallocate large amounts of data (such as xfs's allocsize option).
-    /// 
+    ///
     /// Default: `4MB`
     ///
     /// Examples
@@ -1044,7 +1044,7 @@ impl OptionPy {
     /// If true, then `DB::Open()` will not update the statistics used to optimize compaction
     /// decision by loading table properties from many files. Turning off this feature will
     /// improve DBOpen time especially in disk environment.
-    /// 
+    ///
     /// Default: `false`
     ///
     /// Examples
@@ -1056,7 +1056,7 @@ impl OptionPy {
     }
 
     /// Specify the maximal number of info log files to be kept.
-    /// 
+    ///
     /// Default: `1000`
     ///
     /// Examples
@@ -1068,7 +1068,7 @@ impl OptionPy {
     }
 
     /// Allow the OS to mmap file for writing.
-    /// 
+    ///
     /// Default: `false`
     ///
     /// Examples
@@ -1081,7 +1081,7 @@ impl OptionPy {
 
     /// If enabled, WAL is not flushed automatically after each write. Instead it relies on manual
     /// invocation of `DB::flush_wal()` to write the WAL buffer to its file.
-    /// 
+    ///
     /// Default: `false`
     ///
     /// Examples
@@ -1095,10 +1095,10 @@ impl OptionPy {
     /// Guarantee that all column families are flushed together atomically. This option applies to
     /// both manual flushes (`db.flush()`) and automatic background flushes caused when memtables
     /// are filled.
-    /// 
+    ///
     /// Note that this is only useful when the WAL is disabled. When using the WAL, writes are
     /// always consistent across column families.
-    /// 
+    ///
     /// Default: `false`
     ///
     /// Examples
@@ -1111,7 +1111,7 @@ impl OptionPy {
 
     /// Use to control write rate of flush and compaction. Flush has higher priority than
     /// compaction. If rate limiter is enabled, `bytes_per_sync` is set to 1MB by default.
-    /// 
+    ///
     /// Default: `disable`
     ///
     /// Examples
@@ -1124,7 +1124,7 @@ impl OptionPy {
 
     /// Use to control write rate of flush and compaction. Flush has higher priority than
     /// compaction. If rate limiter is enabled, `bytes_per_sync` is set to 1MB by default.
-    /// 
+    ///
     /// Default: `disable`
     ///
     /// Examples
@@ -1136,10 +1136,10 @@ impl OptionPy {
     }
 
     /// Sets the maximal size of the info log file.
-    /// 
+    ///
     /// If the log file is larger than `max_log_file_size`, a new info log file will be created.
     /// If `max_log_file_size` is equal to zero, all logs will be written to one log file.
-    /// 
+    ///
     /// Default: `0`
     ///
     /// Examples
@@ -1151,10 +1151,10 @@ impl OptionPy {
     }
 
     /// Sets the time for the info log file to roll (in seconds).
-    /// 
+    ///
     /// If specified with non-zero value, log file will be rolled if it has been active longer
     /// than `log_file_time_to_roll`.
-    /// 
+    ///
     /// Default: `0 (disabled)`
     ///
     /// Examples
@@ -1166,12 +1166,12 @@ impl OptionPy {
     }
 
     /// Controls the recycling of log files.
-    /// 
+    ///
     /// If non-zero, previously written log files will be reused for new logs, overwriting the old
     /// data. The value indicates how many such files we will keep around at any point in time for
     /// later use. This is more efficient because the blocks are already allocated and fdatasync
     /// does not need to update the inode after each write.
-    /// 
+    ///
     /// Default: `0`
     ///
     /// Examples
@@ -1184,7 +1184,7 @@ impl OptionPy {
 
     /// Sets the threshold at which all writes will be slowed down to at least `delayed_write_rate`
     /// if estimated bytes needed to be compaction exceed this threshold.
-    /// 
+    ///
     /// Default: `64GB`
     ///
     /// Examples
@@ -1197,7 +1197,7 @@ impl OptionPy {
 
     /// Sets the bytes threshold at which all writes are stopped if estimated bytes needed to be
     /// compaction exceed this threshold.
-    /// 
+    ///
     /// Default: `256GB`
     ///
     /// Examples
@@ -1209,9 +1209,9 @@ impl OptionPy {
     }
 
     /// Sets the size of one block in arena memory allocation.
-    /// 
+    ///
     /// If <= 0, a proper value is automatically calculated (usually 1/10 of `writer_buffer_size`).
-    /// 
+    ///
     /// Default: `0`
     ///
     /// Examples
@@ -1223,7 +1223,7 @@ impl OptionPy {
     }
 
     /// If `true`, then print malloc stats together with `rocksdb.stats` when printing to LOG.
-    /// 
+    ///
     /// Default: `false`
     ///
     /// Examples
@@ -1237,9 +1237,9 @@ impl OptionPy {
     /// Enable whole key bloom filter in memtable. Note this will only take effect if
     /// `memtable_prefix_bloom_size_ratio` is not 0. Enabling whole key filtering can potentially
     /// reduce CPU usage for point-look-ups.
-    /// 
+    ///
     /// Dynamically changeable through `SetOptions()` API
-    /// 
+    ///
     /// Default: `false (disable)`
     ///
     /// Examples
@@ -1251,11 +1251,11 @@ impl OptionPy {
     }
 
     /// Enable the use of key-value separation.
-    /// 
+    ///
     /// More details can be found here: [Integrated BlobDB](https://rocksdb.org/blog/2021/05/26/integrated-blob-db.html).
-    /// 
+    ///
     /// Dynamically changeable through `SetOptions()` API
-    /// 
+    ///
     /// Default: `false (disable)`
     ///
     /// Examples
@@ -1269,14 +1269,14 @@ impl OptionPy {
     /// Set this option to true during creation of database if you want to be able to ingest behind
     /// (call `IngestExternalFile()` skipping keys that already exist, rather than overwriting
     /// matching keys). Setting this option to true has the following effects:
-    /// 
+    ///
     /// 1. Disable some internal optimizations around SST file compression.
     /// 2. Reserve the last level for ingested files only.
     /// 3. Compaction will not include any file from the last level.
-    /// 
+    ///
     /// Note that only Universal Compaction supports `allow_ingest_behind`.
     /// `num_levels` should be >= 3 if this option is turned on.
-    /// 
+    ///
     /// Default: `false Immutable`
     ///
     /// Examples
@@ -1290,9 +1290,9 @@ impl OptionPy {
     /// If `true`, working thread may avoid doing unnecessary and long-latency operation (such as
     /// deleting obsolete files directly or deleting memtable) and will instead schedule a
     /// background job to do it.
-    /// 
+    ///
     /// Use it if you're latency-sensitive.
-    /// 
+    ///
     /// Default: `false (disabled)`
     ///
     /// Examples
@@ -1306,16 +1306,16 @@ impl OptionPy {
     /// If true, the log numbers and sizes of the synced WALs are tracked in MANIFEST. During DB
     /// recovery, if a synced WAL is missing from disk, or the WAL's size does not match the
     /// recorded size in MANIFEST, an error will be reported and the recovery will be aborted.
-    /// 
+    ///
     /// This is one additional protection against WAL corruption besides
     /// the per-WAL-entry checksum.
-    /// 
+    ///
     /// Note that this option does not work with secondary instance. Currently, only syncing closed
     /// WALs are tracked. Calling `DB::SyncWAL()`, etc. or writing with `WriteOptions::sync=true`
     /// to sync the live WAL is not tracked for performance/efficiency reasons.
-    /// 
+    ///
     /// See: https://github.com/facebook/rocksdb/wiki/Track-WAL-in-MANIFEST
-    /// 
+    ///
     /// Default: `false (disabled)`
     ///
     /// Examples
@@ -1327,7 +1327,7 @@ impl OptionPy {
     }
 
     /// Returns the value of the `track_and_verify_wals_in_manifest` option.
-    /// 
+    ///
     /// Examples
     /// ```
     /// opts.get_track_and_verify_wals_in_manifest()
@@ -1342,9 +1342,9 @@ impl OptionPy {
     /// 1. The IDENTITY file is not checksummed, so it is not as safe against corruption.
     /// 2. The IDENTITY file may or may not be copied with the DB
     /// (e.g. not copied by `BackupEngine`), so is not reliable for the provenance of a DB.
-    /// 
+    ///
     /// This option might eventually be obsolete and removed as Identity files are phased out.
-    /// 
+    ///
     /// Default: `true (enabled)`
     ///
     /// Examples
@@ -1356,7 +1356,7 @@ impl OptionPy {
     }
 
     /// Returns the value of the `write_dbid_to_manifest` option.
-    /// 
+    ///
     /// Examples
     /// ```
     /// opts.get_write_dbid_to_manifest()
