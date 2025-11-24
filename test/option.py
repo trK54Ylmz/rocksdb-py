@@ -371,3 +371,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_wal_ttl_seconds(30))
         self.assertRaises(TypeError, o.set_wal_ttl_seconds, None)
+
+    def test_set_wal_size_limit_mb(self):
+        o = Option()
+
+        self.assertIsNone(o.set_wal_size_limit_mb(64))
+        self.assertRaises(TypeError, o.set_wal_size_limit_mb, None)

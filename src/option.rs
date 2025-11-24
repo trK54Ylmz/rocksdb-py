@@ -1010,4 +1010,19 @@ impl OptionPy {
     pub fn set_wal_ttl_seconds(&mut self, secs: u64) {
         self.inner.set_wal_ttl_seconds(secs)
     }
+
+    /// Sets the WAL size limit in MB.
+    /// 
+    /// If total size of WAL files is greater then `wal_size_limit_mb`, they will be deleted
+    /// starting with the earliest until `size_limit` is met.
+    /// 
+    /// Default: `0`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_wal_size_limit_mb(64)
+    /// ```
+    pub fn set_wal_size_limit_mb(&mut self, size: u64) {
+        self.inner.set_wal_size_limit_mb(size)
+    }
 }
