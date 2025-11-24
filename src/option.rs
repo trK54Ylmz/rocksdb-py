@@ -1091,4 +1091,21 @@ impl OptionPy {
     pub fn set_manual_wal_flush(&mut self, is_enabled: bool) {
         self.inner.set_manual_wal_flush(is_enabled)
     }
+
+    /// Guarantee that all column families are flushed together atomically. This option applies to
+    /// both manual flushes (`db.flush()`) and automatic background flushes caused when memtables
+    /// are filled.
+    /// 
+    /// Note that this is only useful when the WAL is disabled. When using the WAL, writes are
+    /// always consistent across column families.
+    /// 
+    /// Default: `false`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_atomic_flush(true)
+    /// ```
+    pub fn set_atomic_flush(&mut self, atomic_flush: bool) {
+        self.inner.set_atomic_flush(atomic_flush)
+    }
 }

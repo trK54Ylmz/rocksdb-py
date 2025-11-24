@@ -407,3 +407,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_manual_wal_flush(True))
         self.assertRaises(TypeError, o.set_manual_wal_flush, None)
+
+    def test_set_atomic_flush(self):
+        o = Option()
+
+        self.assertIsNone(o.set_atomic_flush(True))
+        self.assertRaises(TypeError, o.set_atomic_flush, None)
