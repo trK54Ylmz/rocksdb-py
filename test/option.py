@@ -389,3 +389,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_skip_stats_update_on_db_open(True))
         self.assertRaises(TypeError, o.set_skip_stats_update_on_db_open, None)
+
+    def test_set_keep_log_file_num(self):
+        o = Option()
+
+        self.assertIsNone(o.set_keep_log_file_num(2_500))
+        self.assertRaises(TypeError, o.set_keep_log_file_num, None)

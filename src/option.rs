@@ -1054,4 +1054,16 @@ impl OptionPy {
     pub fn set_skip_stats_update_on_db_open(&mut self, skip: bool) {
         self.inner.set_skip_stats_update_on_db_open(skip)
     }
+
+    /// Specify the maximal number of info log files to be kept.
+    /// 
+    /// Default: `1000`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_keep_log_file_num(2_500)
+    /// ```
+    pub fn set_keep_log_file_num(&mut self, nfiles: usize) {
+        self.inner.set_keep_log_file_num(nfiles)
+    }
 }
