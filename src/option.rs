@@ -1116,7 +1116,7 @@ impl OptionPy {
     ///
     /// Examples
     /// ```
-    /// opts.set_ratelimiter(true)
+    /// opts.set_ratelimiter(1024 * 1024, 100 * 1000, 10)
     /// ```
     pub fn set_ratelimiter(&mut self, rate_bytes_per_sec: i64, refill_period_us: i64, fairness: i32) {
         self.inner.set_ratelimiter(rate_bytes_per_sec, refill_period_us, fairness)
@@ -1129,7 +1129,7 @@ impl OptionPy {
     ///
     /// Examples
     /// ```
-    /// opts.set_auto_tuned_ratelimiter(true)
+    /// opts.set_auto_tuned_ratelimiter(1024 * 1024, 100 * 1000, 10)
     /// ```
     pub fn set_auto_tuned_ratelimiter(&mut self, rate_bytes_per_sec: i64, refill_period_us: i64, fairness: i32) {
         self.inner.set_auto_tuned_ratelimiter(rate_bytes_per_sec, refill_period_us, fairness)
