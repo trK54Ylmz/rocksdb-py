@@ -479,3 +479,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_enable_blob_files(True))
         self.assertRaises(TypeError, o.set_enable_blob_files, None)
+
+    def test_set_allow_ingest_behind(self):
+        o = Option()
+
+        self.assertIsNone(o.set_allow_ingest_behind(True))
+        self.assertRaises(TypeError, o.set_allow_ingest_behind, None)
