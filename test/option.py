@@ -443,3 +443,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_recycle_log_file_num(3))
         self.assertRaises(TypeError, o.set_recycle_log_file_num, None)
+
+    def test_set_soft_pending_compaction_bytes_limit(self):
+        o = Option()
+
+        self.assertIsNone(o.set_soft_pending_compaction_bytes_limit(96 * 1024 * 1024 * 1024))
+        self.assertRaises(TypeError, o.set_soft_pending_compaction_bytes_limit, None)

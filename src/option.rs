@@ -1181,4 +1181,17 @@ impl OptionPy {
     pub fn set_recycle_log_file_num(&mut self, num: usize) {
         self.inner.set_recycle_log_file_num(num)
     }
+
+    /// Sets the threshold at which all writes will be slowed down to at least `delayed_write_rate`
+    /// if estimated bytes needed to be compaction exceed this threshold.
+    /// 
+    /// Default: `64GB`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_soft_pending_compaction_bytes_limit(96 * 1024 * 1024 * 1024)
+    /// ```
+    pub fn set_soft_pending_compaction_bytes_limit(&mut self, limit: usize) {
+        self.inner.set_soft_pending_compaction_bytes_limit(limit)
+    }
 }
