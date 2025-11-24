@@ -377,3 +377,9 @@ class TestOption(unittest.TestCase):
 
         self.assertIsNone(o.set_wal_size_limit_mb(64))
         self.assertRaises(TypeError, o.set_wal_size_limit_mb, None)
+
+    def test_set_manifest_preallocation_size(self):
+        o = Option()
+
+        self.assertIsNone(o.set_manifest_preallocation_size(8 * 1024 * 1024))
+        self.assertRaises(TypeError, o.set_manifest_preallocation_size, None)

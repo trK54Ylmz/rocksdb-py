@@ -1025,4 +1025,19 @@ impl OptionPy {
     pub fn set_wal_size_limit_mb(&mut self, size: u64) {
         self.inner.set_wal_size_limit_mb(size)
     }
+
+    /// Sets the number of bytes to preallocate (via fallocate) the manifest files.
+    /// 
+    /// Default is 4MB, which is reasonable to reduce random IO as well as prevent overallocation
+    /// for mounts that preallocate large amounts of data (such as xfs's allocsize option).
+    /// 
+    /// Default: `4MB`
+    ///
+    /// Examples
+    /// ```
+    /// opts.set_manifest_preallocation_size(8 * 1024 * 1024)
+    /// ```
+    pub fn set_manifest_preallocation_size(&mut self, size: usize) {
+        self.inner.set_manifest_preallocation_size(size)
+    }
 }
