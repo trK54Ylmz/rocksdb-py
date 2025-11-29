@@ -13,13 +13,12 @@ jobs:
       matrix:
         rust: [stable]
         python:
-          - { name: "cp39-cp39", version: "3.9" }
           - { name: "cp310-cp310", version: "3.10" }
           - { name: "cp311-cp311", version: "3.11" }
           - { name: "cp312-cp312", version: "3.12" }
           - { name: "cp313-cp313", version: "3.13" }
         platform:
-          - { os: "ubuntu-20.04", python-architecture: "x64", rust-target: "x86_64-unknown-linux-gnu", name: "Linux x64" }
+          - { os: "ubuntu-22.04", python-architecture: "x64", rust-target: "x86_64-unknown-linux-gnu", name: "Linux x64" }
           - { os: "macos-13", python-architecture: "x64", rust-target: "x86_64-apple-darwin", name: "macOS x64" }
           - { os: "macos-13", python-architecture: "x64", rust-target: "aarch64-apple-darwin", name: "macOS arm64" }
           - { os: "windows-2022", python-architecture: "x64", rust-target: "x86_64-pc-windows-msvc", name: "Windows x64" }
